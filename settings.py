@@ -57,6 +57,9 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
+CAS_SERVER_URL='https://login.gatech.edu/cas/'
+CAS_LOGOUT_COMPLETELY=True
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '%-k86ilviisi09=ht8ua7u@vf8@i-usd^3i+ys=pjo=gm3t^px'
 
@@ -72,7 +75,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'django_cas.backends.CASBackend',
 )
 
 ROOT_URLCONF = 'urls'

@@ -22,6 +22,7 @@ To run the basic dev environment you will need:
 * sqlite3
 * python-pip
 * pep8 (hint: `pip install pep8`)
+* django-cas
 
 ### Running the Dev Server
 
