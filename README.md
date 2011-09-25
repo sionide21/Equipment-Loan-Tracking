@@ -24,6 +24,12 @@ To run the basic dev environment you will need:
 * pep8 (hint: `pip install pep8`)
 * django-cas
 
+A quick way to install these is to install `python` and `pip` and then type:
+
+   pip install -r requirements.pip
+
+Note that this will only install the python dependencies.
+
 ### Running the Dev Server
 
 The first time you run the dev server, you will need to sync the database. 
