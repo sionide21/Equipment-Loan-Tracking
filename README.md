@@ -48,7 +48,7 @@ Now you can access the site at `http://localhost:8000`. See [Django Docs](https:
 Before you commit, make sure that your code passes pep8.
 From your project root, run:
 
-    pep8 core/**.py
+    pep8  --ignore=E501 webapp/core/**.py
 
 ## Contributers
 
