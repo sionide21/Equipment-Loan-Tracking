@@ -26,7 +26,7 @@ To run the basic dev environment you will need:
 
 A quick way to install these is to install `python` and `pip` and then type:
 
-   pip install -r requirements.pip
+    pip install -r requirements.pip
 
 Note that this will only install the python dependencies.
 
