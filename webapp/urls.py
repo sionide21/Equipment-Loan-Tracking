@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^$', 'core.views.index'),
     url(r'^secure$', 'core.views.secure_page', name='secure_page'),
     url(r'^loans/add$', 'core.views.add_loan', name='add_loan'),
+    url(r'^loans/(\d+)$', 'core.views.view_loan', name='view_loan'),
 )
