@@ -35,6 +35,7 @@ def add_loan(request):
                               context_instance=RequestContext(request))
 
 
+@login_required
 def view_loan(request, loan_id):
     '''View a specific loan in the system'''
     loan = get_object_or_404(Loan, id=loan_id)
