@@ -1,3 +1,7 @@
-<div class="loan">
-  Foo: {{ loan.sample_field }}
-</div>
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="loan">
+    Foo: {{ loan.sample_field }}
+  </div>
+{% endblock %}
