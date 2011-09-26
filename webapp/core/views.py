@@ -2,6 +2,7 @@ from django.forms.models import modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from core.models import Loan, LoanForm
 
@@ -25,11 +26,11 @@ def add_loan(request):
     if request.method == 'POST':
         form = LoanForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/secure')
+            loan = form.save()
+            return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
     else:
         form = LoanForm()
-    return render_to_response('core/addloan.html',
+    return render_to_response('core/loan/add.html',
                               {'form': form, },
                               context_instance=RequestContext(request))
 
