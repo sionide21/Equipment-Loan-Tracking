@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     # App Urls
     url(r'^$', 'core.views.index'),
     url(r'^secure$', 'core.views.secure_page', name='secure_page'),
+    url(r'^loans/add$', 'core.views.add_loan', name='add_loan'),
 )
