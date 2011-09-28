@@ -2,6 +2,14 @@
 
 {% block content %}
   <div class="loan">
-    Foo: {{ loan.sample_field }}
+    Foo: {{ loan.sample_field }}<br/>
+    Loan Date: {{ loan.loan_datetime }}<br/>
+    {% if loan.return_datetime %}
+        Return Date: {{ loan.return_datetime }}
+    {% else %}
+        <form action="{{ loan.id }}/return" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Return" />
+    {% endif %}
   </div>
 {% endblock %}
