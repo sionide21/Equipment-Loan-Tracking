@@ -1,7 +1,11 @@
-<h1> Add a Loan </h1>
+{% extends "base.html" %}
 
-<form action="/loans/add" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
+{% block content %}
+  <h1> Add a Loan </h1>
+
+  <form action="/loans/add" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit" />
+  </form>
+{% endblock %}
