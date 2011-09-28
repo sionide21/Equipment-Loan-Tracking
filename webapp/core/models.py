@@ -9,6 +9,7 @@ class Loan(models.Model):
     # An example of how to define fields, will be removed once real fields are
     # added
     sample_field = models.CharField(max_length=100, verbose_name="Foo")
+    contact_field = models.EmailField(verbose_name="Contact Email")
 
     def __unicode__(self):
         return self.sample_field
