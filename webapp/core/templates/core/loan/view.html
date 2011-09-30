@@ -9,7 +9,7 @@
     {% if loan.return_datetime %}
         Return Date: {{ loan.return_datetime }}<br/>
     {% else %}
-        <form action="{{ loan.id }}/return" method="post">
+        <form action="{% url return_loan loan.id %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Return" /></br>
         </form>
