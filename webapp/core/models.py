@@ -23,6 +23,10 @@ class Loan(models.Model):
     location_field = models.CharField(max_length=100, verbose_name="Location")
     contact_field = models.EmailField(verbose_name="Contact Email")
     notes_field = models.TextField(verbose_name="Notes")
+    loan_datetime = models.DateTimeField(auto_now_add=True,
+                                         verbose_name="Date Loaned")
+    return_datetime = models.DateTimeField(null=True,
+                                           verbose_name="Date Returned")
     item = models.ForeignKey(Item, blank=False)
 
     def __unicode__(self):
@@ -47,7 +51,7 @@ class DivFormMixin:
 class LoanForm(ModelForm, DivFormMixin):
     class Meta:
         model = Loan
-        exclude = ('item')
+        exclude = ('item', 'return_datetime',)
 
 
 class ItemForm(ModelForm, DivFormMixin):

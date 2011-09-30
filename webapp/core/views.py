@@ -1,6 +1,6 @@
 from django.forms.models import modelformset_factory
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render_to_response, get_object_or_404, Http404
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
@@ -50,6 +50,7 @@ def add_loan(request):
 def view_loan(request, loan_id):
     '''View a specific loan in the system'''
     loan = get_object_or_404(Loan, id=loan_id)
+<<<<<<< HEAD
     return render_to_response('core/loan/view.html', {'loan': loan})
 
 
@@ -60,3 +61,21 @@ def item_description(request):
     serial = request.REQUEST['serial']
     item = get_object_or_404(Item, serial_number=serial)
     return HttpResponse(item.description)
+=======
+    return render_to_response('core/loan/view.html',
+                              {'loan': loan},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def return_loan(request, loan_id):
+    ''' Mark a specific loan as returned'''
+    from datetime import datetime
+    loan = get_object_or_404(Loan, id=loan_id)
+    if request.method == 'POST':
+        loan.return_datetime = datetime.now()
+        loan.save()
+        return HttpResponseRedirect(reverse('view_loan', args=(loan_id,)))
+    else:
+        raise Http404
+>>>>>>> fdffa519a512d273b215e1d85d7f43a19ae42dd8
