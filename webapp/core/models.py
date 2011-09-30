@@ -2,6 +2,13 @@ from django.db import models
 from django.forms import ModelForm
 
 
+class Item(models.Model):
+    '''
+    An item that TSO can loan out.
+    '''
+    description = models.TextField(blank=False)
+
+
 class Loan(models.Model):
     '''
     Represents an item loaned to an individual.
@@ -13,6 +20,7 @@ class Loan(models.Model):
                                          verbose_name="Date Loaned")
     return_datetime = models.DateTimeField(null=True,
                                            verbose_name="Date Returned")
+    item = models.ForeignKey(Item, blank=False)
 
     def __unicode__(self):
         return self.id
@@ -21,4 +29,9 @@ class Loan(models.Model):
 class LoanForm(ModelForm):
     class Meta:
         model = Loan
-        exclude = ('return_datetime',)
+        exclude = ('item', 'return_datetime',)
+
+
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
