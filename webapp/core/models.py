@@ -9,6 +9,12 @@ class Item(models.Model):
     serial_number = models.CharField(blank=True, null=True, max_length=255, unique=True)
     description = models.TextField(blank=False)
 
+    def save(self, *args, **kwargs):
+        '''Null out serial number if blank'''
+        if not self.serial_number:
+            self.serial_number = None
+        super(Item, self).save(*args, **kwargs)
+
 
 class Loan(models.Model):
     '''
