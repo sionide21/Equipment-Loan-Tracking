@@ -5,9 +5,9 @@
 
   <form action="/loans/add" method="post">
   {% csrf_token %}
-  {{ loan_form.as_div }}
-
   {{ item_form.as_div }}
+
+  {{ loan_form.as_div }}
   <div class="prepend-11 span-2 last"><input type="submit" value="Submit" /></div>
   </form>
 
