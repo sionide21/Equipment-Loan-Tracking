@@ -40,7 +40,7 @@ def view_loan(request, loan_id):
     '''View a specific loan in the system'''
     loan = get_object_or_404(Loan, id=loan_id)
     return render_to_response('core/loan/view.html',
-                              {'loan': loan},
+                              {'loan': loan, },
                               context_instance=RequestContext(request))
 
 
@@ -49,8 +49,10 @@ def return_loan(request, loan_id):
     ''' Mark a specific loan as returned'''
     from datetime import datetime
     loan = get_object_or_404(Loan, id=loan_id)
+    username = request.user.username
     if request.method == 'POST':
         loan.return_datetime = datetime.now()
+        loan.returned_to = username
         loan.save()
         return HttpResponseRedirect(reverse('view_loan', args=(loan_id,)))
     else:

@@ -13,6 +13,7 @@ class Loan(models.Model):
                                          verbose_name="Date Loaned")
     return_datetime = models.DateTimeField(null=True,
                                            verbose_name="Date Returned")
+    returned_to = models.CharField(max_length=30, verbose_name="Returned to")
 
     def __unicode__(self):
         return self.id
@@ -21,4 +22,4 @@ class Loan(models.Model):
 class LoanForm(ModelForm):
     class Meta:
         model = Loan
-        exclude = ('return_datetime',)
+        exclude = ('return_datetime', 'returned_to',)
