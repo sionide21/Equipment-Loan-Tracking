@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from core.models import Loan, LoanForm
+from core.models import Loan, LoanForm, ItemForm
 
 
 def index(request):
@@ -23,15 +23,22 @@ def secure_page(request):
 
 @login_required
 def add_loan(request):
+    loan_form = LoanForm()
+    item_form = ItemForm()
     if request.method == 'POST':
-        form = LoanForm(request.POST)
-        if form.is_valid():
-            loan = form.save()
-            return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
-    else:
-        form = LoanForm()
+        item_form = ItemForm(request.POST)
+        if item_form.is_valid():
+            item = item_form.save()
+            loan_form = LoanForm(request.POST)
+            if loan_form.is_valid():
+                loan = loan_form.save(commit=False)
+                loan.item = item
+                loan.save()
+                return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
+
     return render_to_response('core/loan/add.html',
-                              {'form': form, },
+                              {'loan_form': loan_form,
+                               'item_form': item_form},
                               context_instance=RequestContext(request))
 
 
