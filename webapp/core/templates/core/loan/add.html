@@ -5,7 +5,9 @@
 
   <form action="/loans/add" method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ item_form.as_p }}
+
+  {{ loan_form.as_p }}
   <input type="submit" value="Submit" />
   </form>
 {% endblock %}
