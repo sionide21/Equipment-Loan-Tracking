@@ -10,6 +10,7 @@ class Loan(models.Model):
     # added
     sample_field = models.CharField(max_length=100, verbose_name="Foo")
     contact_field = models.EmailField(verbose_name="Contact Email")
+    notes_field = models.TextField(verbose_name = "Notes")
 
     def __unicode__(self):
         return self.sample_field
