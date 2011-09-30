@@ -13,6 +13,7 @@ class Loan(models.Model):
     '''
     Represents an item loaned to an individual.
     '''
+    contact_field = models.EmailField(verbose_name="Contact Email")
     notes_field = models.TextField(verbose_name="Notes")
     item = models.ForeignKey(Item, blank=False)
 
