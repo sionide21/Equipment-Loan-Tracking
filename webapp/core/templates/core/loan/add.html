@@ -5,9 +5,32 @@
 
   <form action="/loans/add" method="post">
   {% csrf_token %}
-  {{ loan_form.as_p }}
+  {{ loan_form.as_div }}
 
-  {{ item_form.as_p }}
-  <input type="submit" value="Submit" />
+  {{ item_form.as_div }}
+  <div class="prepend-11 span-2 last"><input type="submit" value="Submit" /></div>
   </form>
+
+  <script type="text/javascript">
+    $(function() {
+      var get_serial = function() {
+        serial = $('[name=serial_number]').val()
+        $.get('{% url item_description %}', {serial: serial}, function(data) {
+          description = $("[name='description']");
+          $('#load_link').remove();
+          if (description.val() == '') {
+            $('[name=description]').val(data);
+          } else {
+            load_link = $('<span id="load_link"> <a href="#">A description exists, click here to load.</a></span>');
+            $("[name='serial_number']").after(load_link);
+            load_link.click(function() {
+              description.val(data);
+            });
+          }
+        });
+      };
+
+      $("[name='serial_number']").blur(get_serial);
+    });
+  </script>
 {% endblock %}
