@@ -3,8 +3,17 @@
 {% block content %}
   <div class="loan">
     Description: {{ loan.item.description }}</br>
-    Contact Email: {{ loan.contact_field }}</br>
-    Location: {{ loan.location_field }}</br>
-    Notes: {{ loan.notes_field }}</br>
+    Contact Email: {{ loan.contact_field }}<br/>
+    Location: {{ loan.location_field }}<br/>
+    Notes: {{ loan.notes_field }}<br/>
+    Loan Date: {{ loan.loan_datetime }}<br/>
+    {% if loan.return_datetime %}
+        Return Date: {{ loan.return_datetime }}<br/>
+    {% else %}
+        <form action="{% url return_loan loan.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Return" /></br>
+        </form>
+    {% endif %}
   </div>
 {% endblock %}
