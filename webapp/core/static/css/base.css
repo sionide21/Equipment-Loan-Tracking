@@ -7,9 +7,17 @@
   margin-top: 40px;  
 }
 
+.align-right {
+  float: right;
+}
+
 #login-box {
   padding: 25px;
   border: 1px solid #E5E5E5;
   background: whitesmoke;
   margin-left: 320px;
+}
+
+.nav a {
+  margin-left: 25px;
 }
