@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block nav %}
+<span>Logged in as <i>{{ username }}</i></span>
 <a href="{% url add_loan %}" class="large">Create New Loan</a> 
 <a href="{% url logout %}" class="large">Logout</a> 
 {% endblock %}

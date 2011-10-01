@@ -1,0 +1,20 @@
+{% extends "secure_base.html" %}
+
+{% block content %}
+<div class="span-4 border full-height last-important">
+<ul id="sidebar" class="top-space first">
+  <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
+  <li><a class="large" href="#">Past Loans</a></li>
+</ul>
+</div>
+<div class="top-space span-18 prepend-1 last">
+<div class="subtitle" class="append-1">
+Current Loans
+</div>
+<div class="top-space append-1 last">
+<table>
+<tr> 
+</table>
+</div>
+</div>
+{% endblock %}

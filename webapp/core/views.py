@@ -13,12 +13,9 @@ def index(request):
 
 
 @login_required
-def secure_page(request):
-    '''
-    An example of a page that forces login.
-    '''
+def current_loans(request):
     username = request.user.username
-    return render_to_response('core/secure.html', {'username': username})
+    return render_to_response('core/current.html', {'username': username})
 
 
 @login_required
