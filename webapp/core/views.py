@@ -50,9 +50,9 @@ def add_loan(request):
 def view_loan(request, loan_id):
     '''View a specific loan in the system'''
     loan = get_object_or_404(Loan, id=loan_id)
-<<<<<<< HEAD
-    return render_to_response('core/loan/view.html', {'loan': loan})
-
+    return render_to_response('core/loan/view.html',
+                              {'loan': loan},
+                              context_instance=RequestContext(request))
 
 @login_required
 def item_description(request):
@@ -61,11 +61,6 @@ def item_description(request):
     serial = request.REQUEST['serial']
     item = get_object_or_404(Item, serial_number=serial)
     return HttpResponse(item.description)
-=======
-    return render_to_response('core/loan/view.html',
-                              {'loan': loan},
-                              context_instance=RequestContext(request))
-
 
 @login_required
 def return_loan(request, loan_id):
@@ -78,4 +73,3 @@ def return_loan(request, loan_id):
         return HttpResponseRedirect(reverse('view_loan', args=(loan_id,)))
     else:
         raise Http404
->>>>>>> fdffa519a512d273b215e1d85d7f43a19ae42dd8
