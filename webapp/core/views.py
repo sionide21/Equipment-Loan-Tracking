@@ -7,18 +7,11 @@ from django.template import RequestContext
 from core.models import Loan, LoanForm, Item, ItemForm
 
 
+@login_required
 def index(request):
     '''The homepage'''
-    return render_to_response('core/index.html')
-
-
-@login_required
-def secure_page(request):
-    '''
-    An example of a page that forces login.
-    '''
     username = request.user.username
-    return render_to_response('core/secure.html', {'username': username})
+    return render_to_response('core/index.html', {'username': username})
 
 
 @login_required
