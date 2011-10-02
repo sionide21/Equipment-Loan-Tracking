@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "secure_base.html" %}
 
 {% block content %}
-  <div class="top-space span-8" id="login-box">
-    <a href="{% url secure_page %}" class="large">Log In</a>
-  </div>
+You logged in as {{username}}. <br/>
+<a href="{% url logout %}">Logout</a>
+<a href="{% url add_loan %}">Add Loan </a>
 {% endblock %}

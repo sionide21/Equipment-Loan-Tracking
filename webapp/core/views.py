@@ -1,5 +1,5 @@
 from django.forms.models import modelformset_factory
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -7,18 +7,11 @@ from django.template import RequestContext
 from core.models import Loan, LoanForm, Item, ItemForm
 
 
+@login_required
 def index(request):
     '''The homepage'''
-    return render_to_response('core/index.html')
-
-
-@login_required
-def secure_page(request):
-    '''
-    An example of a page that forces login.
-    '''
     username = request.user.username
-    return render_to_response('core/secure.html', {'username': username})
+    return render_to_response('core/index.html', {'username': username})
 
 
 @login_required
