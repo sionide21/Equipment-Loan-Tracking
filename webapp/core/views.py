@@ -17,7 +17,7 @@ def index(request):
     '''The homepage, show a login page or redirect to current'''
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('current_loans'))
-    return render_to_response('core/index.html')
+    return render_to_response(request, 'core/index.html')
 
 
 @login_required
