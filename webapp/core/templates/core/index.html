@@ -1,13 +1,7 @@
-{% extends "secure_base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-<<<<<<< HEAD
   <div class="top-space span-8" id="login-box">
     <a href="{% url current_loans %}" class="large">Log In</a>
   </div>
-=======
-You logged in as {{username}}. <br/>
-<a href="{% url logout %}">Logout</a>
-<a href="{% url add_loan %}">Add Loan </a>
->>>>>>> 1b453e89cfa914681a9a3e582a492b6a0176d67a
 {% endblock %}
