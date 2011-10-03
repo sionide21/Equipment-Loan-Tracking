@@ -51,6 +51,7 @@ def view_loan(request, loan_id):
                               {'loan': loan},
                               context_instance=RequestContext(request))
 
+
 @login_required
 def item_description(request):
     if 'serial' not in request.REQUEST:
@@ -58,6 +59,7 @@ def item_description(request):
     serial = request.REQUEST['serial']
     item = get_object_or_404(Item, serial_number=serial)
     return HttpResponse(item.description)
+
 
 @login_required
 def return_loan(request, loan_id):
