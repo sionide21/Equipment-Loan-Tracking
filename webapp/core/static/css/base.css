@@ -7,6 +7,10 @@
   margin-top: 40px;  
 }
 
+.bottom-space {
+  margin-bottom: 40px;  
+}
+
 .align-right {
   float: right;
 }
