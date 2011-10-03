@@ -22,7 +22,7 @@ class Loan(models.Model):
     '''
     location_field = models.CharField(max_length=100, verbose_name="Location")
     contact_field = models.EmailField(verbose_name="Contact Email")
-    notes_field = models.TextField(verbose_name="Notes")
+    notes_field = models.TextField(verbose_name="Notes", blank=True)
     loan_datetime = models.DateTimeField(auto_now_add=True,
                                          verbose_name="Date Loaned")
     return_datetime = models.DateTimeField(null=True,
