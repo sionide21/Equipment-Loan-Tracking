@@ -22,7 +22,7 @@ def index(request):
 
 @login_required
 def current_loans(request):
-    loans = []
+    loans = Loan.objects.filter(date_returned__isnull=True)
     return render_to_response(request, 'core/current.html', {'loans': loans})
 
 
