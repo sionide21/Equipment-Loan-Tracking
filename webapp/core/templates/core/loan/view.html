@@ -11,7 +11,7 @@
         Return Date: {{ loan.return_datetime }}<br/>
         Returned to: {{ loan.returned_to }}<br/>
     {% else %}
-        <form action="{{ loan.id }}/return" method="post">
+        <form action="{% url return_loan loan.id %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Return" /></br>
         </form>
