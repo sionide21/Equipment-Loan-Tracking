@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 
 class Item(models.Model):
@@ -27,6 +28,7 @@ class Loan(models.Model):
                                          verbose_name="Date Loaned")
     return_datetime = models.DateTimeField(null=True,
                                            verbose_name="Date Returned")
+    returned_to = models.ForeignKey(User, blank=True, null=True)
     item = models.ForeignKey(Item, blank=False)
 
     def __unicode__(self):
@@ -51,7 +53,7 @@ class DivFormMixin:
 class LoanForm(ModelForm, DivFormMixin):
     class Meta:
         model = Loan
-        exclude = ('item', 'return_datetime',)
+        exclude = ('item', 'return_datetime', 'returned_to',)
 
 
 class ItemForm(ModelForm, DivFormMixin):

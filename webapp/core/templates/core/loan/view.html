@@ -9,6 +9,7 @@
     Loan Date: {{ loan.loan_datetime }}<br/>
     {% if loan.return_datetime %}
         Return Date: {{ loan.return_datetime }}<br/>
+        Returned to: {{ loan.returned_to }}<br/>
     {% else %}
         <form action="{% url return_loan loan.id %}" method="post">
         {% csrf_token %}

@@ -75,6 +75,7 @@ def return_loan(request, loan_id):
     loan = get_object_or_404(Loan, id=loan_id)
     if request.method == 'POST':
         loan.return_datetime = datetime.now()
+        loan.returned_to = request.user
         loan.save()
         return HttpResponseRedirect(reverse('view_loan', args=(loan_id,)))
     else:
