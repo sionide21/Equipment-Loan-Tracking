@@ -3,12 +3,12 @@
 {% block subcontent %}
   <div class="loan">
     Description: {{ loan.item.description }}</br>
-    Contact Email: {{ loan.contact_field }}<br/>
-    Location: {{ loan.location_field }}<br/>
-    Notes: {{ loan.notes_field }}<br/>
-    Loan Date: {{ loan.loan_datetime }}<br/>
-    {% if loan.return_datetime %}
-        Return Date: {{ loan.return_datetime }}<br/>
+    Contact Email: {{ loan.contact_email }}<br/>
+    Location: {{ loan.location }}<br/>
+    Notes: {{ loan.notes }}<br/>
+    Loan Date: {{ loan.date_loaned }}<br/>
+    {% if loan.date_returned %}
+        Return Date: {{ loan.date_returned }}<br/>
         Returned to: {{ loan.returned_to }}<br/>
     {% else %}
         <form action="{% url return_loan loan.id %}" method="post">

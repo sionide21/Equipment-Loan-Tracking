@@ -22,8 +22,8 @@ def index(request):
 
 @login_required
 def current_loans(request):
-    username = request.user.username
-    return render_to_response(request, 'core/current.html', {'username': username})
+    loans = []
+    return render_to_response(request, 'core/current.html', {'loans': loans})
 
 
 @login_required
@@ -74,7 +74,7 @@ def return_loan(request, loan_id):
     from datetime import datetime
     loan = get_object_or_404(Loan, id=loan_id)
     if request.method == 'POST':
-        loan.return_datetime = datetime.now()
+        loan.date_returned = datetime.now()
         loan.returned_to = request.user
         loan.save()
         return HttpResponseRedirect(reverse('view_loan', args=(loan_id,)))
