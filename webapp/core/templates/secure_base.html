@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block nav %}
+<span>Logged in as <i>{{ username }}</i></span>
 <a href="{% url add_loan %}" class="large">Create New Loan</a> 
 <a href="{% url logout %}" class="large">Logout</a> 
+{% endblock %}
+{% block content %}
+<div class="span-4 border full-height last-important">
+<ul id="sidebar" class="top-space first">
+  <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
+  <li><a class="large" href="#">Past Loans</a></li>
+</ul>
+</div>
+<div class="top-space span-18 prepend-1 last">
+{% block subcontent %}
+{% endblock %}
+</div>
 {% endblock %}

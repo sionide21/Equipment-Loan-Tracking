@@ -7,11 +7,17 @@ from django.template import RequestContext
 from core.models import Loan, LoanForm, Item, ItemForm
 
 
-@login_required
 def index(request):
-    '''The homepage'''
+    '''The homepage, show a login page or redirect to current'''
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('current_loans'))
+    return render_to_response('core/index.html')
+
+
+@login_required
+def current_loans(request):
     username = request.user.username
-    return render_to_response('core/index.html', {'username': username})
+    return render_to_response('core/current.html', {'username': username})
 
 
 @login_required
