@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 
 class Item(models.Model):
@@ -27,7 +28,7 @@ class Loan(models.Model):
                                          verbose_name="Date Loaned")
     return_datetime = models.DateTimeField(null=True,
                                            verbose_name="Date Returned")
-    returned_to = models.CharField(max_length=30, verbose_name="Returned to")
+    returned_to = models.ForeignKey(User, blank=True, null=True)
     item = models.ForeignKey(Item, blank=False)
 
     def __unicode__(self):

@@ -73,10 +73,9 @@ def return_loan(request, loan_id):
     ''' Mark a specific loan as returned'''
     from datetime import datetime
     loan = get_object_or_404(Loan, id=loan_id)
-    username = request.user.username
     if request.method == 'POST':
         loan.return_datetime = datetime.now()
-        loan.returned_to = username
+        loan.returned_to = request.user
         loan.save()
         return HttpResponseRedirect(reverse('view_loan', args=(loan_id,)))
     else:
