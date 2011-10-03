@@ -1,10 +1,16 @@
 from django.forms.models import modelformset_factory
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response as render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from core.models import Loan, LoanForm, Item, ItemForm
+
+
+def render_to_response(req, *args, **kwargs):
+    '''Ensure we always use a RequestContext as our context'''
+    kwargs['context_instance'] = RequestContext(req)
+    return render(*args, **kwargs)
 
 
 def index(request):
@@ -17,7 +23,7 @@ def index(request):
 @login_required
 def current_loans(request):
     username = request.user.username
-    return render_to_response('core/current.html', {'username': username})
+    return render_to_response(request, 'core/current.html', {'username': username})
 
 
 @login_required
@@ -39,17 +45,16 @@ def add_loan(request):
                 loan.save()
                 return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
 
-    return render_to_response('core/loan/add.html',
+    return render_to_response(request, 'core/loan/add.html',
                               {'loan_form': loan_form,
-                               'item_form': item_form},
-                              context_instance=RequestContext(request))
+                               'item_form': item_form})
 
 
 @login_required
 def view_loan(request, loan_id):
     '''View a specific loan in the system'''
     loan = get_object_or_404(Loan, id=loan_id)
-    return render_to_response('core/loan/view.html',
+    return render_to_response(request, 'core/loan/view.html',
                               {'loan': loan},
                               context_instance=RequestContext(request))
 
