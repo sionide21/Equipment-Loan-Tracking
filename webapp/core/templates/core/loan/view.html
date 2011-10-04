@@ -1,5 +1,7 @@
 {% extends "secure_base.html" %}
 
+{% block title %} View Loan {% endblock %}
+
 {% block subcontent %}
   <div class="loan">
     Description: {{ loan.item.description }}</br>
@@ -11,10 +13,22 @@
         Return Date: {{ loan.return_datetime }}<br/>
         Returned to: {{ loan.returned_to }}<br/>
     {% else %}
-        <form action="{% url return_loan loan.id %}" method="post">
+        <form action="{% url return_loan loan.id %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="Return" /></br>
         </form>
     {% endif %}
+    <form action="{% url comment_loan loan.id %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form.as_div }}</br>
+    <input type="submit" value="Leave Comment" /></br>
+    </form>
+    {% for comment in comments %}
+        <tr>
+            <td>{{ comment.user }}</td></br>
+            <td>{{ comment.date }}</td></br>
+            <td>{{ comment.comment }}</td></br>
+        </tr>
+    {% endfor %}
   </div>
 {% endblock %}

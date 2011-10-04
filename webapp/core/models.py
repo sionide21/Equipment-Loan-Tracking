@@ -11,9 +11,11 @@ class Item(models.Model):
     description = models.TextField(blank=False)
 
     def save(self, *args, **kwargs):
-        '''Null out serial number if blank'''
+        '''Null out serial number if blank, make it all caps otherwise'''
         if not self.serial_number:
             self.serial_number = None
+        else:
+            self.serial_number = self.serial_number.upper()
         super(Item, self).save(*args, **kwargs)
 
 
@@ -32,7 +34,17 @@ class Loan(models.Model):
     item = models.ForeignKey(Item, blank=False)
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
+
+
+class Comment(models.Model):
+    '''
+    A comment on a loan
+    '''
+    user = models.ForeignKey(User)
+    loan = models.ForeignKey(Loan)
+    date = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField()
 
 
 class DivFormMixin:
@@ -59,3 +71,9 @@ class LoanForm(ModelForm, DivFormMixin):
 class ItemForm(ModelForm, DivFormMixin):
     class Meta:
         model = Item
+
+
+class CommentForm(ModelForm, DivFormMixin):
+    class Meta:
+        model = Comment
+        exclude = ('user', 'loan',)

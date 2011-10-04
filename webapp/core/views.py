@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response as render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from core.models import Loan, LoanForm, Item, ItemForm
+from core.models import Loan, LoanForm, Item, ItemForm, Comment, CommentForm
 
 
 def render_to_response(req, *args, **kwargs):
@@ -17,7 +17,7 @@ def index(request):
     '''The homepage, show a login page or redirect to current'''
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('current_loans'))
-    return render_to_response('core/index.html')
+    return render_to_response(request, 'core/index.html')
 
 
 @login_required
@@ -54,8 +54,10 @@ def add_loan(request):
 def view_loan(request, loan_id):
     '''View a specific loan in the system'''
     loan = get_object_or_404(Loan, id=loan_id)
+    comment_form = CommentForm()
+    comments = loan.comment_set.order_by('-date')
     return render_to_response(request, 'core/loan/view.html',
-                              {'loan': loan},
+                              {'loan': loan, 'comment_form': comment_form, 'comments': comments},
                               context_instance=RequestContext(request))
 
 
@@ -64,7 +66,7 @@ def item_description(request):
     if 'serial' not in request.REQUEST:
         raise Http404
     serial = request.REQUEST['serial']
-    item = get_object_or_404(Item, serial_number=serial)
+    item = get_object_or_404(Item, serial_number__iexact=serial)
     return HttpResponse(item.description)
 
 
@@ -78,5 +80,22 @@ def return_loan(request, loan_id):
         loan.returned_to = request.user
         loan.save()
         return HttpResponseRedirect(reverse('view_loan', args=(loan_id,)))
+    else:
+        raise Http404
+
+
+@login_required
+def comment_loan(request, loan_id):
+    '''Comment on a loan'''
+    from datetime import datetime
+    loan = get_object_or_404(Loan, id=loan_id)
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.loan = loan
+            comment.save()
+        return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
     else:
         raise Http404
