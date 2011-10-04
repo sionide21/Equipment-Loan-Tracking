@@ -1,6 +1,8 @@
-{% extends "base.html" %}
+{% extends "secure_base.html" %}
 
-{% block content %}
+{% block title %} View Loan {% endblock %}
+
+{% block subcontent %}
   <div class="loan">
     Description: {{ loan.item.description }}</br>
     Contact Email: {{ loan.contact_field }}<br/>
@@ -9,6 +11,7 @@
     Loan Date: {{ loan.loan_datetime }}<br/>
     {% if loan.return_datetime %}
         Return Date: {{ loan.return_datetime }}<br/>
+        Returned to: {{ loan.returned_to }}<br/>
     {% else %}
         <form action="{% url return_loan loan.id %}" method="post">
         {% csrf_token %}

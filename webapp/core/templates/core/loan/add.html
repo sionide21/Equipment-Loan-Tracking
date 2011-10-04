@@ -1,14 +1,14 @@
-{% extends "base.html" %}
+{% extends "secure_base.html" %}
 
-{% block content %}
-  <h1> Add a Loan </h1>
+{% block title %} Create New Loan {% endblock %}
 
-  <form action="/loans/add" method="post">
+{% block subcontent %}
+  <form class="top-space" action="/loans/add" method="post">
   {% csrf_token %}
   {{ item_form.as_div }}
 
   {{ loan_form.as_div }}
-  <div class="prepend-11 span-2 last"><input type="submit" value="Submit" /></div>
+  <div class="prepend-11 span-2 last bottom-space"><input type="submit" value="Submit" /></div>
   </form>
 
   <script type="text/javascript">

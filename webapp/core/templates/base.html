@@ -6,14 +6,15 @@
     <!--[if lt IE 8]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" media="screen, projection">
     <script type="text/javascript" src="/static/js/jquery-1.6.4.min.js"></script>
+    <title>{%block title %}TSO{% endblock %} - Loan Tracker</title>
   </head>
   <body>
     <div id="header">
       <div class="container">
-        <div class="span-16">
-          <h2 class="bottom">TSO Equipment Loan Tracker</h2>
+        <div class="span-10">
+          <h2 class="bottom"><a class="unstyled-link" href="{% url current_loans %}">TSO Equipment Loan Tracker</a></h2>
         </div>
-        <div class="nav align-right">
+        <div class="nav align-right last">
           {% block nav %}{% endblock %}
         </div>
       </div>      
