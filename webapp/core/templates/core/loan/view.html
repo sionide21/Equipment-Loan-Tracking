@@ -3,7 +3,8 @@
 {% block subcontent %}
   <div class="loan">
     Description: {{ loan.item.description }}</br>
-    Contact Email: {{ loan.contact_field }}<br/>
+    Loaned To: {{ loan.loaned_to.name }}</br>
+    Contact Email: {{ loan.loaned_to.email }}<br/>
     Location: {{ loan.location_field }}<br/>
     Notes: {{ loan.notes_field }}<br/>
     Loan Date: {{ loan.loan_datetime }}<br/>
