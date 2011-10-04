@@ -1,5 +1,5 @@
 from django.forms.models import modelformset_factory
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -60,7 +60,7 @@ def item_description(request):
     if 'serial' not in request.REQUEST:
         raise Http404
     serial = request.REQUEST['serial']
-    item = get_object_or_404(Item, serial_number=serial)
+    item = get_object_or_404(Item, serial_number__iexact=serial)
     return HttpResponse(item.description)
 
 

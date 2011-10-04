@@ -10,9 +10,11 @@ class Item(models.Model):
     description = models.TextField(blank=False)
 
     def save(self, *args, **kwargs):
-        '''Null out serial number if blank'''
+        '''Null out serial number if blank, make it all caps otherwise'''
         if not self.serial_number:
             self.serial_number = None
+        else:
+            self.serial_number = self.serial_number.upper()
         super(Item, self).save(*args, **kwargs)
 
 
