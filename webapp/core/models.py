@@ -34,7 +34,17 @@ class Loan(models.Model):
     item = models.ForeignKey(Item, blank=False)
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
+
+
+class Comment(models.Model):
+    '''
+    A comment on a loan
+    '''
+    user = models.ForeignKey(User)
+    loan = models.ForeignKey(Loan)
+    date = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField()
 
 
 class DivFormMixin:
@@ -61,3 +71,9 @@ class LoanForm(ModelForm, DivFormMixin):
 class ItemForm(ModelForm, DivFormMixin):
     class Meta:
         model = Item
+
+
+class CommentForm(ModelForm, DivFormMixin):
+    class Meta:
+        model = Comment
+        exclude = ('user', 'loan',)

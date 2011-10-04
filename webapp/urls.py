@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^loans/(\d+)$', 'core.views.view_loan', name='view_loan'),
     url(r'^items/description$', 'core.views.item_description', name='item_description'),
     url(r'^loans/(\d+)/return$', 'core.views.return_loan', name='return_loan'),
+    url(r'^loans/(\d+)/comment$', 'core.views.comment_loan', name='comment_loan'),
 ) + staticfiles_urlpatterns()
