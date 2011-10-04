@@ -95,7 +95,7 @@ def item_description(request):
     if 'serial' not in request.REQUEST:
         raise Http404
     serial = request.REQUEST['serial']
-    item = get_object_or_404(Item, serial_number=serial)
+    item = get_object_or_404(Item, serial_number__iexact=serial)
     return HttpResponse(item.description)
 
 

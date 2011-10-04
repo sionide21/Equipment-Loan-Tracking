@@ -1,8 +1,8 @@
 {% extends "secure_base.html" %}
 
-{% block subcontent %}
-  <div class="subtitle">Create New Loan</div>
+{% block title %} Create New Loan {% endblock %}
 
+{% block subcontent %}
   <form class="top-space" action="/loans/add" method="post">
   {% csrf_token %}
   <div class="span-13 last">
