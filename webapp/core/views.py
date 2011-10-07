@@ -1,10 +1,11 @@
 from django.forms.models import modelformset_factory
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response as render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from core.models import Loan, LoanForm, Item, ItemForm, Comment, CommentForm
+from core.models import Loan, LoanForm, Item, ItemForm, Person, PersonForm, Comment, CommentForm
 
 
 def render_to_response(req, *args, **kwargs):
@@ -24,6 +25,36 @@ def index(request):
 def current_loans(request):
     username = request.user.username
     return render_to_response(request, 'core/current.html', {'username': username})
+
+
+@login_required
+def find_person(request):
+    qs = None
+    if request.method == 'POST':
+        terms = request.POST['q']
+        query = Q(gtid=terms)
+        for field in ['name', 'email']:
+            # case insensitive contains for each of the above fields
+            field_query = '%s__icontains' % field
+            query |= Q(**{field_query: terms})
+        qs = Person.objects.filter(query)
+
+    return render_to_response(request, 'core/loan/person.html',
+                              {'results': qs})
+
+
+@login_required
+def add_person(request):
+    person_form = PersonForm()
+    if request.method == 'POST':
+        person_form = PersonForm(request.POST)
+    if person_form.is_valid():
+        person = person_form.save()
+        return render_to_response(request, 'core/person/select.html',
+                                  {'person': person})
+
+    return render_to_response(request, 'core/person/add.html',
+                            {'person_form': person_form})
 
 
 @login_required
