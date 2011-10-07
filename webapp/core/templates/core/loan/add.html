@@ -7,7 +7,7 @@
   {% csrf_token %}
   <div class="span-13 last">
     <div class="span-3"><label for="lookup_person">Loan to:</label></div>
-    <div class="span-10 last"><a href="#" id="lookup_person">Lookup Person</a></div>
+    <div class="span-10 last"><a href="#" id="lookup_person">{{ loaned_to.name|default:"Lookup Person" }}</a></div>
   </div>
   {{ item_form.as_div }}
 
