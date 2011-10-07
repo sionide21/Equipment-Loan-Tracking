@@ -1,6 +1,15 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelChoiceField, HiddenInput
 from django.contrib.auth.models import User
+
+
+class Person(models.Model):
+    '''
+    A person capable of borrowing.
+    '''
+    gtid = models.CharField(max_length=9, blank=False, unique=True, verbose_name="GT ID")
+    name = models.CharField(max_length=255, blank=False)
+    email = models.EmailField(blank=False)
 
 
 class Item(models.Model):
@@ -23,15 +32,13 @@ class Loan(models.Model):
     '''
     Represents an item loaned to an individual.
     '''
-    location_field = models.CharField(max_length=100, verbose_name="Location")
-    contact_field = models.EmailField(verbose_name="Contact Email")
-    notes_field = models.TextField(verbose_name="Notes", blank=True)
-    loan_datetime = models.DateTimeField(auto_now_add=True,
-                                         verbose_name="Date Loaned")
-    return_datetime = models.DateTimeField(null=True,
-                                           verbose_name="Date Returned")
+    location = models.CharField(max_length=100)
+    notes = models.TextField(blank=True)
+    date_loaned = models.DateTimeField(auto_now_add=True)
+    date_returned = models.DateTimeField(null=True)
     returned_to = models.ForeignKey(User, blank=True, null=True)
     item = models.ForeignKey(Item, blank=False)
+    loaned_to = models.ForeignKey(Person, blank=False)
 
     def __unicode__(self):
         return unicode(self.id)
@@ -65,12 +72,18 @@ class DivFormMixin:
 class LoanForm(ModelForm, DivFormMixin):
     class Meta:
         model = Loan
-        exclude = ('item', 'return_datetime', 'returned_to',)
+        exclude = ('item', 'date_returned', 'returned_to',)
+    loaned_to = ModelChoiceField(queryset=Person.objects, widget=HiddenInput)
 
 
 class ItemForm(ModelForm, DivFormMixin):
     class Meta:
         model = Item
+
+
+class PersonForm(ModelForm, DivFormMixin):
+    class Meta:
+        model = Person
 
 
 class CommentForm(ModelForm, DivFormMixin):
