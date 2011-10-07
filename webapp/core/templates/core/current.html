@@ -1,9 +1,8 @@
 {% extends "secure_base.html" %}
 
+{% block title %}Current Loans{% endblock %}
+
 {% block subcontent %}
-<div class="subtitle" class="append-1">
-Current Loans
-</div>
 <div class="top-space append-1 last">
   <table class="span-20">
     <tr>
@@ -17,7 +16,7 @@ Current Loans
       <tr>
         <td><a href="{% url view_loan loan.id %}">{{ loan.item.serial_number|default:"No Serial Number" }}</a></td>
         <td>{{ loan.item.description|truncatewords:5 }}</td>
-        <td>{{ loan.contact_email }}</td>
+        <td>{{ loan.loaned_to.name }}</td>
         <td>{{ loan.location }}</td>
         <td>{{ loan.date_loaned }}</td>
       </tr>

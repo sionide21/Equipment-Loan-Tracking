@@ -1,6 +1,15 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelChoiceField, HiddenInput
 from django.contrib.auth.models import User
+
+
+class Person(models.Model):
+    '''
+    A person capable of borrowing.
+    '''
+    gtid = models.CharField(max_length=9, blank=False, unique=True, verbose_name="GT ID")
+    name = models.CharField(max_length=255, blank=False)
+    email = models.EmailField(blank=False)
 
 
 class Item(models.Model):
@@ -11,9 +20,11 @@ class Item(models.Model):
     description = models.TextField(blank=False)
 
     def save(self, *args, **kwargs):
-        '''Null out serial number if blank'''
+        '''Null out serial number if blank, make it all caps otherwise'''
         if not self.serial_number:
             self.serial_number = None
+        else:
+            self.serial_number = self.serial_number.upper()
         super(Item, self).save(*args, **kwargs)
 
 
@@ -22,15 +33,25 @@ class Loan(models.Model):
     Represents an item loaned to an individual.
     '''
     location = models.CharField(max_length=100)
-    contact_email = models.EmailField()
     notes = models.TextField(blank=True)
     date_loaned = models.DateTimeField(auto_now_add=True)
     date_returned = models.DateTimeField(null=True)
     returned_to = models.ForeignKey(User, blank=True, null=True)
     item = models.ForeignKey(Item, blank=False)
+    loaned_to = models.ForeignKey(Person, blank=False)
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
+
+
+class Comment(models.Model):
+    '''
+    A comment on a loan
+    '''
+    user = models.ForeignKey(User)
+    loan = models.ForeignKey(Loan)
+    date = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField()
 
 
 class DivFormMixin:
@@ -52,8 +73,20 @@ class LoanForm(ModelForm, DivFormMixin):
     class Meta:
         model = Loan
         exclude = ('item', 'date_returned', 'returned_to',)
+    loaned_to = ModelChoiceField(queryset=Person.objects, widget=HiddenInput)
 
 
 class ItemForm(ModelForm, DivFormMixin):
     class Meta:
         model = Item
+
+
+class PersonForm(ModelForm, DivFormMixin):
+    class Meta:
+        model = Person
+
+
+class CommentForm(ModelForm, DivFormMixin):
+    class Meta:
+        model = Comment
+        exclude = ('user', 'loan',)
