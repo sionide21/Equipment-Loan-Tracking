@@ -63,6 +63,8 @@ def add_loan(request):
     item_form = ItemForm()
     loaned_to = None
     if request.method == 'POST':
+        loan_form = LoanForm(request.POST)
+        loaned_to = loan_form.fields['loaned_to'].to_python(request.POST['loaned_to'])
         try:
             item = Item.objects.get(serial_number__iexact=request.POST.get('serial_number'))
             item_form = ItemForm(request.POST, instance=item)
@@ -70,8 +72,6 @@ def add_loan(request):
             item_form = ItemForm(request.POST)
         if item_form.is_valid():
             item = item_form.save()
-            loan_form = LoanForm(request.POST)
-            loaned_to = loan_form.fields['loaned_to'].to_python(request.POST['loaned_to'])
             if loan_form.is_valid():
                 loan = loan_form.save(commit=False)
                 loan.item = item
