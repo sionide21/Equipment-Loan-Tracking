@@ -1,23 +1,80 @@
 {% extends "secure_base.html" %}
 
-{% block title %} View Loan {% endblock %}
+{% block title %}Loan Details{% endblock %}
 
 {% block subcontent %}
   <div class="loan">
-    Description: {{ loan.item.description }}</br>
-    Loaned To: {{ loan.loaned_to.name }}</br>
-    Location: {{ loan.location }}<br/>
-    Notes: {{ loan.notes }}<br/>
-    Loan Date: {{ loan.date_loaned }}<br/>
-    {% if loan.date_returned %}
-        Return Date: {{ loan.date_returned }}<br/>
-        Returned to: {{ loan.returned_to }}<br/>
-    {% else %}
-        <form action="{% url return_loan loan.id %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="Return" /></br>
-        </form>
-    {% endif %}
+    <div class="subsection">
+      <h4>Dates</h4>
+      <div>
+        <div class="label span-4">Loan Date</div>
+        <div class="last">{{ loan.date_loaned }}</div>
+      </div>
+      <div>
+        <div class="label span-4">Due Date</div>
+        <div class="last">N/A</div>
+      </div>
+    </div>
+    <div class="subsection">
+      <h4>Equipment</h4>
+      <div>
+        <div class="label span-4">Serial Number</div>
+        <div class="last">{{ loan.item.serial_number }}</div>
+      </div>
+      <div>
+        <div class="label span-4">Description</div>
+        <div class="last"> {{ loan.item.description }}</div>
+      </div>
+    </div>
+    <div class="subsection">
+      <h4>Loaned To</h4>
+      <div>
+        <div class="label span-4">Name</div>
+        <div class="last">{{ loan.loaned_to.name }}</div>
+      </div>
+      <div>
+        <div class="label span-4">GTID</div>
+        <div class="last"> {{ loan.loaned_to.gtid }}</div>
+      </div>
+      <div>
+        <div class="label span-4">Email</div>
+        <div class="last"> {{ loan.loaned_to.email }}</div>
+      </div>
+      <div>
+        <div class="label span-4">Location</div>
+        <div class="last"> {{ loan.location }}</div>
+      </div>
+    </div>
+    <div class="subsection">
+      <h4>Notes</h4>
+      <p>{{ loan.notes }}</p>
+    </div>
+    <div class="subsection">
+      <h4>Status</h4>
+      {% if loan.date_returned %}
+        <div>
+          <div class="label span-4">Status</div>
+          <div class="last" style="color:green;">Returned</div>
+        </div>
+        <div>
+          <div class="label span-4">Return Date</div>
+          <div class="last">{{ loan.date_returned }}</div>
+        </div>
+        <div>
+          <div class="label span-4">Returned To</div>
+          <div class="last">{{ loan.returned_to }}</div>
+        </div>
+      {% else %}
+        <div>
+          <div class="label span-4">Status</div>
+          <div class="last" style="color:red;">Not returned</div>
+          <form action="{% url return_loan loan.id %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Return" /></br>
+          </form>
+        </div>
+      {% endif %}
+    </div>
     <form action="{% url comment_loan loan.id %}" method="POST">
     {% csrf_token %}
     {{ comment_form.as_div }}</br>

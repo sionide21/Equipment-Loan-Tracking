@@ -15,10 +15,18 @@
   float: right;
 }
 
-#login-box {
-  padding: 25px;
+#login-box, .subsection {
   border: 1px solid #E5E5E5;
   background: whitesmoke;
+}
+
+.subsection {
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+#login-box {
+  padding: 25px;
   margin-left: 320px;
 }
 
@@ -55,6 +63,7 @@
 .subtitle {
   font-size: 18px;
   border-bottom: 1px solid #EEE;
+  margin-bottom: 40px;
 }
 
 .left-space {
@@ -72,4 +81,8 @@
 
 .unstyled-link:hover {
   color: black;  
+}
+
+.label {
+  font-weight: bold;
 }
