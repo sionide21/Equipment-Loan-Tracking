@@ -93,6 +93,21 @@ def view_loan(request, loan_id):
 
 
 @login_required
+def view_person(request, person_id):
+    person = get_object_or_404(Person, gtid=person_id)
+    person_form = PersonForm(instance=person)
+    if request.method == 'POST':
+        person_form = PersonForm(request.POST, instance=person)
+        if person_form.is_valid():
+            person = person_form.save()
+            loans = Loan.objects.filter(date_returned__isnull=True)
+            return render_to_response(request, 'core/current.html', {'loans': loans})
+    return render_to_response(request, 'core/person/edit.html',
+                              {'person_form': person_form},
+                              context_instance=RequestContext(request))
+
+
+@login_required
 def item_description(request):
     if 'serial' not in request.REQUEST:
         raise Http404
