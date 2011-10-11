@@ -61,15 +61,17 @@ def add_person(request):
 def add_loan(request):
     loan_form = LoanForm()
     item_form = ItemForm()
+    loaned_to = None
     if request.method == 'POST':
         try:
-            item = Item.objects.get(serial_number=request.POST.get('serial_number'))
+            item = Item.objects.get(serial_number__iexact=request.POST.get('serial_number'))
             item_form = ItemForm(request.POST, instance=item)
         except Item.DoesNotExist:
             item_form = ItemForm(request.POST)
         if item_form.is_valid():
             item = item_form.save()
             loan_form = LoanForm(request.POST)
+            loaned_to = loan_form.fields['loaned_to'].to_python(request.POST['loaned_to'])
             if loan_form.is_valid():
                 loan = loan_form.save(commit=False)
                 loan.item = item
@@ -77,7 +79,8 @@ def add_loan(request):
                 return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
 
     return render_to_response(request, 'core/loan/add.html',
-                              {'loan_form': loan_form,
+                              {'loaned_to': loaned_to,
+                               'loan_form': loan_form,
                                'item_form': item_form})
 
 
