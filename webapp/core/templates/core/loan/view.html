@@ -75,17 +75,23 @@
         </div>
       {% endif %}
     </div>
-    <form action="{% url comment_loan loan.id %}" method="POST">
-    {% csrf_token %}
-    {{ comment_form.as_div }}</br>
-    <input type="submit" value="Leave Comment" /></br>
-    </form>
-    {% for comment in comments %}
-        <tr>
-            <td>{{ comment.user }}</td></br>
-            <td>{{ comment.date }}</td></br>
-            <td>{{ comment.comment }}</td></br>
-        </tr>
-    {% endfor %}
+    <div class="subsection">
+      <h4>Comments</h4>
+      {% for comment in comments %}
+        <div class="comment">
+          <b>{{ comment.user }}</b> &middot; <span style="color:#999;">{{ comment.date }}</span></br>
+          <div class="comment-text">
+            {{ comment.comment }}
+          </div>
+        </div>
+      {% endfor %}
+      <div>
+        <form action="{% url comment_loan loan.id %}" method="POST">
+          {% csrf_token %}
+          {{ comment_form.as_div }}</br>
+          <input type="submit" value="Leave a comment" /></br>
+        </form>
+      </div>
+    </div>
   </div>
 {% endblock %}
