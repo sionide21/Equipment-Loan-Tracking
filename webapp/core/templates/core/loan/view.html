@@ -79,7 +79,7 @@
       <h4>Comments</h4>
       {% for comment in comments %}
         <div class="comment">
-          <b>{{ comment.user }}</b> &middot; <span style="color:#999;">{{ comment.date }}</span></br>
+          <b>{{ comment.user }}</b> &middot; <span style="color:#999;">{{ comment.date }}</span>
           <div class="comment-text">
             {{ comment.comment }}
           </div>
@@ -87,9 +87,16 @@
       {% endfor %}
       <div>
         <form action="{% url comment_loan loan.id %}" method="POST">
+          {{ comment_form.non_field_errors }}
           {% csrf_token %}
-          {{ comment_form.as_div }}</br>
-          <input type="submit" value="Leave a comment" /></br>
+          {{ comment_form.comment.errors }}
+          <div>
+          {{ comment_form.comment }}
+          </div>
+          <div class="align-right">
+            <input type="submit" value="Leave a comment" /></br>
+          </div>
+          <div class="clear"></div>
         </form>
       </div>
     </div>
