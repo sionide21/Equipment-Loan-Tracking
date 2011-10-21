@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms import ModelForm, ModelChoiceField, HiddenInput
 from django.contrib.auth.models import User
+from django import forms
 
 
 class Person(models.Model):
@@ -89,4 +90,7 @@ class PersonForm(ModelForm, DivFormMixin):
 class CommentForm(ModelForm, DivFormMixin):
     class Meta:
         model = Comment
+        widgets = {
+          'comment': forms.Textarea(attrs={'rows': 2, 'cols': 94})
+        }
         exclude = ('user', 'loan',)

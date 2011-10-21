@@ -89,7 +89,7 @@ def view_loan(request, loan_id):
     '''View a specific loan in the system'''
     loan = get_object_or_404(Loan, id=loan_id)
     comment_form = CommentForm()
-    comments = loan.comment_set.order_by('-date')
+    comments = loan.comment_set.order_by('date')
     return render_to_response(request, 'core/loan/view.html',
                               {'loan': loan, 'comment_form': comment_form, 'comments': comments},
                               context_instance=RequestContext(request))
