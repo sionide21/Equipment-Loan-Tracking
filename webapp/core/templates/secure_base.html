@@ -5,7 +5,7 @@
 <a href="{% url logout %}" class="large">Logout</a> 
 {% endblock %}
 {% block content %}
-<div class="span-4 border full-height last-important">
+<div id="sidebar-container" class="span-4 border column last-important">
 <ul id="sidebar" class="top-space first">
   {% block sidebar_links %}
   <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
@@ -13,7 +13,7 @@
   {% endblock %}
 </ul>
 </div>
-<div class="top-space span-18 prepend-1 last">
+<div class="top-space span-18 prepend-1 column last">
   <div class="subtitle">
     {% block title %}{% endblock %}
   </div>
