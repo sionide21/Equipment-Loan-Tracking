@@ -67,10 +67,10 @@
       {% else %}
         <div>
           <div class="label span-4">Status</div>
-          <div class="last" style="color:red;">Not returned</div>
+          <div class="span-2" style="color:red;">Not returned</div>
           <form action="{% url return_loan loan.id %}" method="POST">
             {% csrf_token %}
-            <input type="submit" value="Return" /></br>
+            <input type="submit" class="return" value="Return" /></br>
           </form>
         </div>
       {% endif %}
