@@ -1,4 +1,5 @@
 #header {
+  height: 36px;
   background: #F7D682;
   padding: 10px; 
 }
@@ -20,6 +21,11 @@
   background: whitesmoke;
 }
 
+#sidebar-container {
+  min-height: 100%;
+  margin-bottom: -2056px !important;
+}
+
 .subsection {
   padding: 15px;
   margin-bottom: 10px;
@@ -32,10 +38,6 @@
 
 .nav > * {
   margin-left: 25px;
-}
-
-.full-height {
-  height: 100%;
 }
 
 #sidebar {
@@ -85,4 +87,14 @@
 
 .label {
   font-weight: bold;
+}
+
+/* Hack for getting equal height cols in blueprint */
+.column {
+  padding-bottom : 2000px;
+  margin-bottom : -2000px;
+}
+
+.container {
+  overflow: hidden;
 }
