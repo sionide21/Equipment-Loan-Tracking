@@ -64,7 +64,7 @@
   margin-bottom: 0;
 }
 
-#sidebar li:hover {
+#sidebar li:hover, .current-page {
   background: #E9ECFF; 
 }
 

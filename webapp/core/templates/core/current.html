@@ -2,6 +2,11 @@
 
 {% block title %}Current Loans{% endblock %}
 
+{% block sidebar_links %}
+  <li><a class="large current-page" href="{% url current_loans %}">Current Loans</a></li>
+  <li><a class="large" href="#">Past Loans</a></li>
+{% endblock %}
+
 {% block subcontent %}
 <div class="top-space append-1 last">
   <table class="span-20">

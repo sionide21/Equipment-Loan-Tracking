@@ -7,8 +7,10 @@
 {% block content %}
 <div class="span-4 border full-height last-important">
 <ul id="sidebar" class="top-space first">
+  {% block sidebar_links %}
   <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
   <li><a class="large" href="#">Past Loans</a></li>
+  {% endblock %}
 </ul>
 </div>
 <div class="top-space span-18 prepend-1 last">
