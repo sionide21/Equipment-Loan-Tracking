@@ -55,7 +55,6 @@ class Comment(models.Model):
     comment = models.TextField()
 
 
-
 class DivFormMixin:
     '''
     Mix this into a django.forms.Form to enable a new output method 'as_div' that
@@ -92,6 +91,6 @@ class CommentForm(ModelForm, DivFormMixin):
     class Meta:
         model = Comment
         widgets = {
-          'comment': forms.Textarea(attrs={'rows':2, 'cols':94})
+          'comment': forms.Textarea(attrs={'rows': 2, 'cols': 94})
         }
         exclude = ('user', 'loan',)
