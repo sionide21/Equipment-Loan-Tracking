@@ -116,3 +116,41 @@
 .container {
   overflow: hidden;
 }
+
+table {
+  border-collapse: collapse;  
+}
+
+table tr {
+  border: 1px solid #BBB;
+}
+
+.table-header {
+  border: 0;  
+}
+
+th {
+  font-size: 14px;
+}
+
+td {
+  padding: 0;
+}
+
+td a, td a:hover {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  padding: 4px 10px 4px 5px;
+}
+
+table tr:hover td {
+  background-color: #BCD4EC;
+}
+
+.empty-row td, .empty-row:hover td {
+  padding: 4px 10px 4px 5px;
+  background: #E5ECF9;
+  font-weight: bold;
+  text-align: center;
+}
