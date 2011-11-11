@@ -34,7 +34,6 @@ class Loan(models.Model):
     Represents an item loaned to an individual.
     '''
     location = models.CharField(max_length=100)
-    notes = models.TextField(blank=True)
     date_loaned = models.DateTimeField(auto_now_add=True)
     date_returned = models.DateTimeField(null=True)
     returned_to = models.ForeignKey(User, blank=True, null=True)
