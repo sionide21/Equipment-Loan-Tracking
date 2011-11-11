@@ -28,6 +28,12 @@ def current_loans(request):
 
 
 @login_required
+def past_loans(request):
+    loans = Loan.objects.filter(date_returned__isnull=False)
+    return render_to_response(request, 'core/past.html', {'loans': loans})
+
+
+@login_required
 def find_person(request):
     qs = None
     if request.method == 'POST':
