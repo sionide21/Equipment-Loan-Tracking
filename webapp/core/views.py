@@ -63,14 +63,21 @@ def add_person(request):
                             {'person_form': person_form})
 
 
-@login_required
-def add_loan(request):
-    loan_form = LoanForm()
-    item_form = ItemForm()
-    loaned_to = None
+def handle_modify_loan(request, loan=None):
+    '''Takes care of saving OR updating a loan'''
+    if loan:
+        loan_form = LoanForm(instance=loan)
+        item_form = ItemForm(instance=loan.item)
+        loaned_to = loan.loaned_to
+    else:
+        loan_form = LoanForm()
+        item_form = ItemForm()
+        loaned_to = None
+
     if request.method == 'POST':
-        loan_form = LoanForm(request.POST)
+        loan_form = LoanForm(request.POST, instance=loan)
         loaned_to = loan_form.fields['loaned_to'].to_python(request.POST['loaned_to'])
+
         try:
             item = Item.objects.get(serial_number__iexact=request.POST.get('serial_number'))
             item_form = ItemForm(request.POST, instance=item)
@@ -83,11 +90,27 @@ def add_loan(request):
                 loan.item = item
                 loan.save()
                 return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
+    ctx = {
+        'loaned_to': loaned_to,
+        'loan_form': loan_form,
+        'item_form': item_form,
+        'add': loan == None
+    }
+    return render_to_response(request, 'core/loan/add_edit.html', ctx)
 
-    return render_to_response(request, 'core/loan/add.html',
-                              {'loaned_to': loaned_to,
-                               'loan_form': loan_form,
-                               'item_form': item_form})
+
+@login_required
+def edit_loan(request, loan_id):
+    loan = get_object_or_404(Loan, id=loan_id)
+    if loan.date_returned:
+        # Don't edit returned loans
+        return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
+    return handle_modify_loan(request, loan)
+
+
+@login_required
+def add_loan(request):
+    return handle_modify_loan(request)
 
 
 @login_required

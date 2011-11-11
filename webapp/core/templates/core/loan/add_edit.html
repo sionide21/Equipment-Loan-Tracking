@@ -1,9 +1,15 @@
 {% extends "secure_base.html" %}
 
-{% block title %} Create New Loan {% endblock %}
+{% block title %}
+  {% if add %}
+    Create New Loan
+  {% else %}
+    Edit Loan
+  {% endif %}
+{% endblock %}
 
 {% block subcontent %}
-  <form class="top-space" action="/loans/add" method="post">
+  <form class="top-space" method="post">
   {% csrf_token %}
   <div class="span-13 last">
     <div class="span-3"><label for="lookup_person">Loan to:</label></div>
@@ -15,7 +21,7 @@
   <div class="prepend-11 span-2 last bottom-space"><input type="submit" value="Submit" /></div>
   </form>
 
-    
+
 
   <script type="text/javascript">
     $(function() {
