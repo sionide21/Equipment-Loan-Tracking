@@ -1,0 +1,14 @@
+{% extends "secure_base.html" %}
+
+{% block title %}Past Loans{% endblock %}
+
+{% block sidebar_links %}
+  <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
+  <li><a class="large current-page" href="{% url past_loans %}">Past Loans</a></li>
+{% endblock %}
+
+{% block subcontent %}
+<div class="top-space append-1 last">
+  {% include "core/_loan_list.html" %}
+</div>
+{% endblock %}
