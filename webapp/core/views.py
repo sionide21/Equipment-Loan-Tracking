@@ -82,6 +82,7 @@ def handle_modify_loan(request, loan=None):
             if loan_form.is_valid():
                 loan = loan_form.save(commit=False)
                 loan.item = item
+                loan.loaned_by = request.user
                 loan.save()
                 return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
     ctx = {

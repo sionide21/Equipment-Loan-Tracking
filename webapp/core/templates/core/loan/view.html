@@ -46,6 +46,13 @@
       </div>
     </div>
     <div class="subsection">
+      <h4>Loaned By</h4>
+      <div>
+        <div class="label span-4">Username</div>
+        <div class="last">{{ loan.loaned_by }}</div>
+      </div>
+    </div>
+    <div class="subsection">
       <h4>Status</h4>
       {% if loan.date_returned %}
         <div>
