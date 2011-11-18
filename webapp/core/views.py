@@ -26,6 +26,11 @@ def current_loans(request):
     loans = Loan.objects.filter(date_returned__isnull=True)
     return render_to_response(request, 'core/current.html', {'loans': loans})
 
+@login_required
+def past_loans(request):
+    loans = Loan.objects.filter(date_returned__isnull=False)
+    return render_to_response(request, 'core/past.html', {'loans': loans});
+
 
 @login_required
 def find_person(request):
@@ -82,6 +87,7 @@ def handle_modify_loan(request, loan=None):
             if loan_form.is_valid():
                 loan = loan_form.save(commit=False)
                 loan.item = item
+                loan.loaned_by = request.user
                 loan.save()
                 return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
     ctx = {
