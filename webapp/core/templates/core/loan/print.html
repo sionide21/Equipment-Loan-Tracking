@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css" media="screen, projection">
+    <script type="text/javascript" src="/static/js/jquery-1.6.4.min.js"></script>
+    <title>{%block title %}TSO{% endblock %} - Loan Tracker</title>
+  </head>
+
+  <body>
+
+    {% block subcontent %}
+      <div class="loan">
+        <div class="subsection">
+          <h4>Dates</h4>
+          <div>
+            <div class="label span-4">Loan Date</div>
+            <div class="last">{{ loan.date_loaned }}</div>
+          </div>
+          <div>
+            <div class="label span-4">Due Date</div>
+            <div class="last">N/A</div>
+          </div>
+        </div>
+        <div class="subsection">
+          <h4>Equipment</h4>
+          <div>
+            <div class="label span-4">Serial Number</div>
+            <div class="last">{{ loan.item.serial_number }}</div>
+          </div>
+          <div>
+            <div class="label span-4">Description</div>
+            <div class="last"> {{ loan.item.description }}</div>
+          </div>
+        </div>
+        <div class="subsection">
+          <h4>Loaned To</h4>
+          <div>
+            <div class="label span-4">Name</div>
+            <div class="last">{{ loan.loaned_to.name }}</div>
+          </div>
+          <div>
+            <div class="label span-4">GTID</div>
+            <div class="last"> {{ loan.loaned_to.gtid }}</div>
+          </div>
+          <div>
+            <div class="label span-4">Email</div>
+            <div class="last"> {{ loan.loaned_to.email }}</div>
+          </div>
+          <div>
+            <div class="label span-4">Location</div>
+            <div class="last"> {{ loan.location }}</div>
+          </div>
+        </div>
+        <div class="subsection">
+          <h4>Status</h4>
+          {% if loan.date_returned %}
+            <div>
+              <div class="label span-4">Status</div>
+              <div class="last" style="color:green;">Returned</div>
+            </div>
+            <div>
+              <div class="label span-4">Return Date</div>
+              <div class="last">{{ loan.date_returned }}</div>
+            </div>
+            <div>
+              <div class="label span-4">Returned To</div>
+              <div class="last">{{ loan.returned_to }}</div>
+            </div>
+          {% else %}
+            <div>
+              <div class="label span-4">Status</div>
+              <div class="span-2" style="color:red;">Not returned</div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="signature">
+          <h4>Signature</h4>
+          Print Name___________
+          Signature____________
+          Date________________
+        </div>
+      </div>
+    {% endblock %}
+  </body>
+</html>

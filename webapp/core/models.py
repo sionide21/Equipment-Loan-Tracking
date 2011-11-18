@@ -34,11 +34,11 @@ class Loan(models.Model):
     Represents an item loaned to an individual.
     '''
     location = models.CharField(max_length=100)
-    notes = models.TextField(blank=True)
     date_loaned = models.DateTimeField(auto_now_add=True)
     date_returned = models.DateTimeField(null=True)
-    returned_to = models.ForeignKey(User, blank=True, null=True)
+    returned_to = models.ForeignKey(User, blank=True, null=True, related_name="accepted_returns")
     item = models.ForeignKey(Item, blank=False)
+    loaned_by = models.ForeignKey(User, related_name="created_loans")
     loaned_to = models.ForeignKey(Person, blank=False)
 
     def __unicode__(self):
@@ -63,7 +63,7 @@ class DivFormMixin:
     def as_div(self):
         "Returns this form rendered as HTML <divs>s"
         return self._html_output(
-            normal_row=u'<div class="span-13 last"><div class="span-3">%(label)s%(errors)s</div><div class="span-10 last">%(field)s</div>%(help_text)s</div>',
+            normal_row=u'<div class="span-13 last"><div class="span-3">%(label)s</div><div class="span-10 last">%(field)s</div>%(help_text)s</div>',
             error_row=u'<div class="error span-13 last">%s</div>',
             row_ender=u'</div>',
             help_text_html=u'<div class="quiet legend prepend-3 span-10 last">%s</div>',
@@ -73,7 +73,7 @@ class DivFormMixin:
 class LoanForm(ModelForm, DivFormMixin):
     class Meta:
         model = Loan
-        exclude = ('item', 'date_returned', 'returned_to',)
+        exclude = ('item', 'date_returned', 'returned_to', 'loaned_by',)
     loaned_to = ModelChoiceField(queryset=Person.objects, widget=HiddenInput)
 
 

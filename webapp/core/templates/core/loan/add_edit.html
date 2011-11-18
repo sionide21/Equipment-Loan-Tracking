@@ -1,0 +1,95 @@
+{% extends "secure_base.html" %}
+
+{% block title %}
+  {% if add %}
+    Create New Loan
+  {% else %}
+    Edit Loan
+  {% endif %}
+{% endblock %}
+
+{% block subcontent %}
+  <form class="top-space" method="post">
+  {% csrf_token %}
+    <div class="subsection">
+      <h4>Equipment</h4>
+      <div>
+        <div style="color:red;">
+        {% for error in item_form.serial_number.errors %}
+          {{ error }}
+        {% endfor %}
+        </div>
+        <div class="label span-4">Serial Number</div>
+        <div class="last">{{ item_form.serial_number }}</div>
+      </div>
+      <div>
+        <div style="color:red;">
+        {% for error in item_form.description.errors %}
+          {{ error }}
+        {% endfor %}
+        </div>
+        <div class="label span-4"><span style="color:red;">*</span>Description</div>
+        <div class="last"> {{ item_form.description }}</div>
+      </div>
+    </div>
+    <div class="subsection">
+      <h4>Loaned To</h4>
+      <div>
+        <div style="color:red;">
+        {% for error in loan_form.loaned_to.errors %}
+          {{ error }}
+        {% endfor %}
+        </div>
+        <div class="label span-4"><span style="color:red;">*</span>Loan to</div>
+        <div class="last"> {{ loan_form.loaned_to }}</div>
+        <div class="last" style="bottom-margin:10px;"><a href="#" id="lookup_person">{{ loaned_to.name|default:"Lookup Person" }}</a></div>
+        <div style="color:red;">
+        {% for error in loan_form.location.errors %}
+          {{ error }}
+        {% endfor %}
+        </div>
+        <div class="label span-4"><span style="color:red;">*</span>Location</div>
+        <div class="last"> {{ loan_form.location }}</div>
+      </div>
+    </div>
+<div class="prepend-17 last">  <input type="submit" value="Submit" /></div>
+  </form>
+
+
+
+  <script type="text/javascript">
+    $(function() {
+      var get_serial = function() {
+        serial = $('[name=serial_number]').val()
+        $.get('{% url item_description %}', {serial: serial}, function(data) {
+          description = $("[name='description']");
+          $('#load_link').remove();
+          if (description.val() == '') {
+            $('[name=description]').val(data);
+          } else {
+            load_link = $('<span id="load_link"> <a href="#">A description exists, click here to load.</a></span>');
+            $("[name='serial_number']").after(load_link);
+            load_link.click(function() {
+              description.val(data);
+            });
+          }
+        });
+      };
+
+      $("[name='serial_number']").blur(get_serial);
+      
+      $("#lookup_person").click(function() {
+        var child = window.open("{% url find_person %}");
+        if (window.focus) {
+          child.focus();
+        }
+        window.person_selected = function(id, name) {
+          $("[name='loaned_to']").val(id);
+          $("#lookup_person").text(name);
+          child.close();
+        };
+      	return false;
+      });
+    });
+  </script>
+{% endblock %}
