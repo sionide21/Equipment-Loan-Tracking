@@ -154,3 +154,12 @@ table tr:hover td {
   font-weight: bold;
   text-align: center;
 }
+
+.title-options {
+  float:right;
+  color: #EEE;
+}
+
+.title-options a {
+  text-decoration: none;
+}
