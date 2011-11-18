@@ -90,6 +90,6 @@ class CommentForm(ModelForm, DivFormMixin):
     class Meta:
         model = Comment
         widgets = {
-          'comment': forms.Textarea(attrs={'rows': 2, 'cols': 94})
+          'comment': forms.Textarea(attrs={'rows': 2, 'style': "width:720px"})
         }
         exclude = ('user', 'loan',)
