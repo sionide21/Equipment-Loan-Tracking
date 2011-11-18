@@ -4,7 +4,7 @@
 
 {% block sidebar_links %}
   <li><a class="large current-page" href="{% url current_loans %}">Current Loans</a></li>
-  <li><a class="large" href="#">Past Loans</a></li>
+  <li><a class="large" href="{% url past_loans %}">Past Loans</a></li>
 {% endblock %}
 
 {% block subcontent %}

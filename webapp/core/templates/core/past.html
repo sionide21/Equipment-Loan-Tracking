@@ -1,0 +1,8 @@
+{% extends "core/current.html" %}
+
+{% block title %}Past Loans{% endblock %}
+
+{% block sidebar_links %}
+  <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
+  <li><a class="large current-page" href="{% url past_loans %}">Past Loans</a></li>
+{% endblock %}
