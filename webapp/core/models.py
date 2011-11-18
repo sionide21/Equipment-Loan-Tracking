@@ -35,6 +35,7 @@ class Loan(models.Model):
     '''
     location = models.CharField(max_length=100)
     date_loaned = models.DateTimeField(auto_now_add=True)
+    date_due = models.DateTimeField(validators=[validate_past])
     date_returned = models.DateTimeField(null=True)
     returned_to = models.ForeignKey(User, blank=True, null=True, related_name="accepted_returns")
     item = models.ForeignKey(Item, blank=False)
@@ -94,3 +95,11 @@ class CommentForm(ModelForm, DivFormMixin):
           'comment': forms.Textarea(attrs={'rows': 2, 'cols': 94})
         }
         exclude = ('user', 'loan',)
+
+
+def validate_past(value):
+    from django.core.exceptions import ValidationError
+    from datetime import datetime
+    #Dont allow due dates to be in the past
+    if value < datetime.now():
+        raise ValidationError('Due Date must be in the future')
