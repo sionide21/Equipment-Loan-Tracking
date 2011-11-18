@@ -4,6 +4,14 @@ from django.contrib.auth.models import User
 from django import forms
 
 
+def validate_past(value):
+    from django.core.exceptions import ValidationError
+    from datetime import datetime
+    #Dont allow due dates to be in the past
+    if value < datetime.now():
+        raise ValidationError('Due Date must be in the future')
+
+
 class Person(models.Model):
     '''
     A person capable of borrowing.
@@ -95,11 +103,3 @@ class CommentForm(ModelForm, DivFormMixin):
           'comment': forms.Textarea(attrs={'rows': 2, 'cols': 94})
         }
         exclude = ('user', 'loan',)
-
-
-def validate_past(value):
-    from django.core.exceptions import ValidationError
-    from datetime import datetime
-    #Dont allow due dates to be in the past
-    if value < datetime.now():
-        raise ValidationError('Due Date must be in the future')
