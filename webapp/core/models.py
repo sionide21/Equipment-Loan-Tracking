@@ -36,9 +36,9 @@ class Loan(models.Model):
     location = models.CharField(max_length=100)
     date_loaned = models.DateTimeField(auto_now_add=True)
     date_returned = models.DateTimeField(null=True)
-    returned_to = models.ForeignKey(User, blank=True, null=True, related_name="loan_returned_to")
+    returned_to = models.ForeignKey(User, blank=True, null=True, related_name="accepted_returns")
     item = models.ForeignKey(Item, blank=False)
-    loaned_by = models.ForeignKey(User, related_name="loan_loaned_by")
+    loaned_by = models.ForeignKey(User, related_name="created_loans")
     loaned_to = models.ForeignKey(Person, blank=False)
 
     def __unicode__(self):
