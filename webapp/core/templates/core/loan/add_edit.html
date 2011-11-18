@@ -52,7 +52,19 @@
         <div class="last"> {{ loan_form.location }}</div>
       </div>
     </div>
-<div class="prepend-17 last">  <input type="submit" value="Submit" /></div>
+    <div class="subsection">
+      <h4>Due Date</h4>
+      <div>
+        <div style="color:red;">
+        {% for error in loan_form.date_due.errors %}
+          {{ error }}
+        {% endfor %}
+        </div>
+        <div class="label span-4"><span style=color:red;">*</span>Due Date</div>
+        <div class="last"> {{ loan_form.date_due }}</div>
+      </div>
+    </div>
+    <div class="prepend-17 last">  <input type="submit" value="Submit" /></div>
   </form>
 
 

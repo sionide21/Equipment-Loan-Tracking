@@ -1,6 +1,6 @@
 {% extends "secure_base.html" %}
 
-{% block title %}Loan Details - <a href="{% url edit_loan loan %}">edit</a> <a href="{% url print_loan loan %}">print</a>{% endblock %}
+{% block title %}Loan Details<span class="title-options"><a href="{% url edit_loan loan %}">Edit</a> | <a href="{% url print_loan loan %}">Receipt</a></span>{% endblock %}
 
 {% block subcontent %}
   <div class="loan">
@@ -12,7 +12,7 @@
       </div>
       <div>
         <div class="label span-4">Due Date</div>
-        <div class="last">N/A</div>
+        <div class="last">{{ loan.date_due }}</div>
       </div>
     </div>
     <div class="subsection">
