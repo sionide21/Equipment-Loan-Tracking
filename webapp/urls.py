@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     # App Urls
     url(r'^$', 'core.views.index', name='index'),
     url(r'^current$', 'core.views.current_loans', name='current_loans'),
+    url(r'^past$', 'core.views.past_loans', name='past_loans'),
     url(r'^loans/add$', 'core.views.add_loan', name='add_loan'),
     url(r'^loans/(\d+)$', 'core.views.view_loan', name='view_loan'),
     url(r'^person/find$', 'core.views.find_person', name='find_person'),
@@ -19,4 +20,5 @@ urlpatterns = patterns('',
     url(r'^loans/(\d+)/return$', 'core.views.return_loan', name='return_loan'),
     url(r'^loans/(\d+)/edit$', 'core.views.edit_loan', name='edit_loan'),
     url(r'^loans/(\d+)/comment$', 'core.views.comment_loan', name='comment_loan'),
+    url(r'^loans/(\d+)/print$', 'core.views.print_loan', name='print_loan'),
 ) + staticfiles_urlpatterns()
