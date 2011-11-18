@@ -9,24 +9,6 @@
 
 {% block subcontent %}
 <div class="top-space append-1 last">
-  <table class="span-19">
-    <tr class="table-header">
-      <th>Loaned</th>
-      <th>Serial Number</th>
-      <th>To</th>
-      <th>On</th>
-    </tr>
-    {% if loans|length < 1 %}
-      <tr class="empty-row"><td colspan="100">No Loans</td></tr>
-    {% endif %}
-    {% for loan in loans %}
-      <tr>
-        <td><a href="{% url view_loan loan.id %}">{{ loan.item.description|truncatewords:5 }}</a></td>
-        <td><a href="{% url view_loan loan.id %}">{{ loan.item.serial_number|default:"No Serial Number" }}</a></td>
-        <td><a href="{% url view_loan loan.id %}">{{ loan.loaned_to.name }}</a></td>
-        <td><a href="{% url view_loan loan.id %}">{{ loan.date_loaned }}</a></td>
-      </tr>
-    {% endfor %}
-  </table>
+  {% include "core/_loan_list.html" %}
 </div>
 {% endblock %}

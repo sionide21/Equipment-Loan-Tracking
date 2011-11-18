@@ -9,7 +9,7 @@
 <ul id="sidebar" class="top-space first">
   {% block sidebar_links %}
   <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
-  <li><a class="large" href="#">Past Loans</a></li>
+  <li><a class="large" href="{% url past_loans %}">Past Loans</a></li>
   {% endblock %}
 </ul>
 </div>
