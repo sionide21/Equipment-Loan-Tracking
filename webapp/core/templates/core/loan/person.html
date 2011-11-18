@@ -13,11 +13,18 @@
   <div class="span-9 last"><a href="{% url add_person %}">Add Person</a></div>
 
   <table class="span-20">
-    <tr>
+    <tr class="table-header">
       <th>GT ID</th>
       <th>Name</th>
       <th>Email</th>
     </tr>
+    {% if results|length < 1 %}
+      <tr class="empty-row"><td colspan="100">No results</td></tr>
+    {% else %}
+      {% if not results %}
+      <tr class="empty-row"><td colspan="100">Use the above field to search</td></tr>
+      {% endif %}
+    {% endif %}
     {% for person in results %}
       <tr>
         <td><a href="javascript:select({{person.id}}, '{{person.name}}');">{{ person.gtid }}</a></td>

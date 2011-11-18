@@ -62,7 +62,7 @@ class DivFormMixin:
     def as_div(self):
         "Returns this form rendered as HTML <divs>s"
         return self._html_output(
-            normal_row=u'<div class="span-13 last"><div class="span-3">%(label)s%(errors)s</div><div class="span-10 last">%(field)s</div>%(help_text)s</div>',
+            normal_row=u'<div class="span-13 last"><div class="span-3">%(label)s</div><div class="span-10 last">%(field)s</div>%(help_text)s</div>',
             error_row=u'<div class="error span-13 last">%s</div>',
             row_ender=u'</div>',
             help_text_html=u'<div class="quiet legend prepend-3 span-10 last">%s</div>',
