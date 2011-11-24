@@ -105,6 +105,14 @@
           <div class="clear"></div>
         </form>
       </div>
-    </div>
   </div>
+  
+  <div class="subsection">
+    <h4>Emails Sent</h4>
+    {% for email in loan.emails.all %}
+      <div class="email">
+        <span style="color:#999;">{{ email.date }}</span> &middot; {{ email.description }}
+      </div>
+    {% endfor %}
+</div>
 {% endblock %}

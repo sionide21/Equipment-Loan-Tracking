@@ -1,0 +1,9 @@
+This message is to remind you that the following item is due soon.
+
+Item:     {{loan.item.description}}
+Borrowed: {{loan.date_loaned}}
+Due On:   {{loan.date_due}}
+
+
+Thanks,
+TSO

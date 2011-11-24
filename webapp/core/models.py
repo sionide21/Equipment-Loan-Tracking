@@ -1,7 +1,11 @@
 from django.db import models
 from django.forms import ModelForm, ModelChoiceField, HiddenInput
+from django.template.loader import get_template
+from django.template import Context
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 from django import forms
+from datetime import date, datetime, time, timedelta
 
 
 def validate_past(value):
@@ -62,6 +66,53 @@ class Comment(models.Model):
     loan = models.ForeignKey(Loan)
     date = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
+
+
+class EmailRecord(models.Model):
+    '''
+    A record that an email has been sent to a user.
+    '''
+    loan = models.ForeignKey(Loan, blank=False, related_name="emails")
+    date = models.DateTimeField(blank=False, auto_now_add=True)
+    description = models.CharField(max_length=255, blank=True)
+
+
+class ItemDueEmail(EmailMessage):
+    '''
+    An email about a loan being due shortly.
+    '''
+    def __init__(self, loan, send_desc="", **kwargs):
+        self.loan = loan
+        self.send_desc = send_desc
+        kwargs['subject'] = "Equipment Due Reminder"
+        template = get_template("item_due_email.txt")
+        ctx = Context({'loan': loan})
+        kwargs['body'] = template.render(ctx)
+        kwargs['to'] = [loan.loaned_to.email] + list(kwargs.get('to', []))
+        super(ItemDueEmail, self).__init__(**kwargs)
+
+    def send(self, *args, **kwargs):
+        super(ItemDueEmail, self).send(*args, **kwargs)
+        EmailRecord(loan=self.loan, description=self.send_desc).save()
+
+
+class ReminderTask:
+    '''
+    A task that finds any loans due soon and sends out a reminder.
+
+    This will generally be run via a cron script.
+    '''
+    def __init__(self, remaining_time):
+        self.remaining_time = remaining_time
+        self.due_date = date.today() + timedelta(days=remaining_time)
+
+    def send_reminders(self):
+        loans = Loan.objects.filter(date_returned__isnull=True, date_due=self.due_date)
+        today = [datetime.combine(date.today(), t) for t in (time.min, time.max)]
+        for loan in loans:
+            # Only send one email a day about a loan
+            if not loan.emails.filter(date__range=today).exists():
+                ItemDueEmail(loan, send_desc="%d day reminder." % self.remaining_time).send()
 
 
 class DivFormMixin:
