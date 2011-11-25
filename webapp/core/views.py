@@ -88,6 +88,7 @@ def handle_modify_loan(request, loan=None):
             if loan_form.is_valid():
                 loan = loan_form.save(commit=False)
                 loan.item = item
+                loan.loaned_by = request.user
                 loan.save()
                 return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
     ctx = {
@@ -121,6 +122,15 @@ def view_loan(request, loan_id):
     comments = loan.comment_set.order_by('date')
     return render_to_response(request, 'core/loan/view.html',
                               {'loan': loan, 'comment_form': comment_form, 'comments': comments},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def print_loan(request, loan_id):
+    '''View the details of a loan in printable format'''
+    loan = get_object_or_404(Loan, id=loan_id)
+    return render_to_response(request, 'core/loan/print.html',
+                              {'loan': loan},
                               context_instance=RequestContext(request))
 
 

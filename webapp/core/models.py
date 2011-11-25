@@ -4,6 +4,14 @@ from django.contrib.auth.models import User
 from django import forms
 
 
+def validate_past(value):
+    from django.core.exceptions import ValidationError
+    from datetime import datetime
+    #Dont allow due dates to be in the past
+    if value < datetime.now():
+        raise ValidationError('Due Date must be in the future')
+
+
 class Person(models.Model):
     '''
     A person capable of borrowing.
@@ -35,9 +43,11 @@ class Loan(models.Model):
     '''
     location = models.CharField(max_length=100)
     date_loaned = models.DateTimeField(auto_now_add=True)
+    date_due = models.DateTimeField(validators=[validate_past])
     date_returned = models.DateTimeField(null=True)
-    returned_to = models.ForeignKey(User, blank=True, null=True)
+    returned_to = models.ForeignKey(User, blank=True, null=True, related_name="accepted_returns")
     item = models.ForeignKey(Item, blank=False)
+    loaned_by = models.ForeignKey(User, related_name="created_loans")
     loaned_to = models.ForeignKey(Person, blank=False)
 
     def __unicode__(self):
@@ -72,7 +82,7 @@ class DivFormMixin:
 class LoanForm(ModelForm, DivFormMixin):
     class Meta:
         model = Loan
-        exclude = ('item', 'date_returned', 'returned_to',)
+        exclude = ('item', 'date_returned', 'returned_to', 'loaned_by',)
     loaned_to = ModelChoiceField(queryset=Person.objects, widget=HiddenInput)
 
 
