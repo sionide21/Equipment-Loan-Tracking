@@ -2,7 +2,10 @@
 
 {% block title %}Loan Details{% endblock %}
 {% block title-options %}
-<a href="{% url edit_loan loan %}">Edit</a> | <a href="{% url print_loan loan %}">Receipt</a>
+  {% if not loan.returned_to %}
+    <a href="{% url edit_loan loan %}">Edit</a> | 
+  {% endif %}
+  <a href="{% url print_loan loan %}">Receipt</a>
 {% endblock %}
 
 {% block subcontent %}
