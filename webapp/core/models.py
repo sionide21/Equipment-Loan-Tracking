@@ -75,6 +75,7 @@ class Comment(models.Model):
     loan = models.ForeignKey(Loan)
     date = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
+    is_edit = models.BooleanField(default=False)
 
 
 class EmailRecord(models.Model):
