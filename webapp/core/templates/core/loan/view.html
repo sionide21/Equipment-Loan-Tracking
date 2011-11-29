@@ -88,7 +88,11 @@
       <h4>Comments</h4>
       {% for comment in comments %}
         <div class="comment">
-          <b>{{ comment.user }}</b> &middot; <span style="color:#999;">{{ comment.date }}</span>
+          <b>{{ comment.user }}</b>
+          {% if comment.is_edit %}
+          &middot; <i><span style="color:red;">Edited Loan</span></i>
+          {% endif %}
+          &middot; <span style="color:#999;">{{ comment.date }}</span>
           <div class="comment-text">
             {{ comment.comment }}
           </div>
