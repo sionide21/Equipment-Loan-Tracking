@@ -159,6 +159,13 @@ def print_loan(request, loan_id):
 
 
 @login_required
+def receipt(request, loan_id):
+    '''View the details of a loan in printable format'''
+    loan = get_object_or_404(Loan, id=loan_id)
+    return render_to_response(request, 'core/loan/receipt.html', {'loan': loan})
+
+
+@login_required
 def view_person(request, person_id):
     person = get_object_or_404(Person, gtid=person_id)
     person_form = PersonForm(instance=person)
