@@ -23,4 +23,5 @@ urlpatterns = patterns('',
     url(r'^loans/(\d+)/edit$', 'core.views.edit_loan', name='edit_loan'),
     url(r'^loans/(\d+)/comment$', 'core.views.comment_loan', name='comment_loan'),
     url(r'^loans/(\d+)/print$', 'core.views.print_loan', name='print_loan'),
+    url(r'^loans/(\d+)/receipt$', 'core.views.receipt', name='receipt'),
 ) + staticfiles_urlpatterns()
