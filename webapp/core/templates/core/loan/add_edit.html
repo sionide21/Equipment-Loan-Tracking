@@ -60,7 +60,7 @@
           {{ error }}
         {% endfor %}
         </div>
-        <div class="label span-4"><span style=color:red;">*</span>Due Date</div>
+        <div class="label span-4"><span style="color:red;">*</span>Due Date</div>
         <div class="last"> {{ loan_form.date_due }}</div>
       </div>
     </div>
@@ -71,6 +71,8 @@
 
   <script type="text/javascript">
     $(function() {
+      jQuery("#id_date_due").datepicker();
+
       var get_serial = function() {
         serial = $('[name=serial_number]').val()
         $.get('{% url item_description %}', {serial: serial}, function(data) {
