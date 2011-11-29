@@ -5,7 +5,8 @@ from django.shortcuts import render_to_response as render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from core.models import Loan, LoanForm, Item, ItemForm, Person, PersonForm, Comment, CommentForm
+from django.core.exceptions import PermissionDenied
+from core.models import Loan, LoanForm, Item, ItemForm, Person, Whitelist, PersonForm, Comment, CommentForm, WhitelistUserForm
 
 
 def render_to_response(req, *args, **kwargs):
@@ -19,6 +20,29 @@ def index(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('current_loans'))
     return render_to_response(request, 'core/index.html')
+
+
+@login_required
+def user_admin(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    form = WhitelistUserForm()
+    if request.method == 'POST':
+        form = WhitelistUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    usernames = Whitelist.objects.all()
+    return render_to_response(request, 'core/user_admin.html', {'usernames': usernames, 'form': form})
+
+
+@login_required
+def remove_user(request, username_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    if request.method != 'POST':
+        raise Http404
+    get_object_or_404(Whitelist, id=username_id).delete()
+    return HttpResponseRedirect(reverse(user_admin))
 
 
 @login_required

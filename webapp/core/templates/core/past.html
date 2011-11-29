@@ -5,6 +5,9 @@
 {% block sidebar_links %}
   <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
   <li><a class="large current-page" href="{% url past_loans %}">Past Loans</a></li>
+  {% if user.is_superuser %}
+    <li><a class="large" href="{% url user_admin %}">User Admin</a></li>
+  {% endif %}
 {% endblock %}
 
 {% block subcontent %}

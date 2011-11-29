@@ -21,6 +21,15 @@ class Person(models.Model):
     email = models.EmailField(blank=False)
 
 
+class Whitelist(models.Model):
+    '''
+    A name on the list of approved usernames for the system.
+    '''
+    class Meta:
+        ordering = ['username']
+    username = models.CharField(max_length=255, blank=False, unique=True, error_messages={'unique': 'This user already has access.'})
+
+
 class Item(models.Model):
     '''
     An item that TSO can loan out.
@@ -94,6 +103,11 @@ class ItemForm(ModelForm, DivFormMixin):
 class PersonForm(ModelForm, DivFormMixin):
     class Meta:
         model = Person
+
+
+class WhitelistUserForm(ModelForm, DivFormMixin):
+    class Meta:
+        model = Whitelist
 
 
 class CommentForm(ModelForm, DivFormMixin):
