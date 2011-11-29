@@ -2,7 +2,12 @@
 
 {% block title %}Loan Details{% endblock %}
 {% block title-options %}
-<a href="{% url edit_loan loan %}">Edit</a> | <a href="{% url print_loan loan %}">Receipt</a>
+  {% if not loan.returned_to %}
+    <a href="{% url edit_loan loan %}">Edit</a> | 
+    <a href="{% url print_loan loan %}">Print</a>
+  {% else %}
+    <a href="{% url receipt loan %}">Receipt</a>
+  {% endif %}
 {% endblock %}
 
 {% block subcontent %}
@@ -85,7 +90,11 @@
       <h4>Comments</h4>
       {% for comment in comments %}
         <div class="comment">
-          <b>{{ comment.user }}</b> &middot; <span style="color:#999;">{{ comment.date }}</span>
+          <b>{{ comment.user }}</b>
+          {% if comment.is_edit %}
+          &middot; <i><span style="color:red;">Edited Loan</span></i>
+          {% endif %}
+          &middot; <span style="color:#999;">{{ comment.date }}</span>
           <div class="comment-text">
             {{ comment.comment }}
           </div>
@@ -105,6 +114,14 @@
           <div class="clear"></div>
         </form>
       </div>
-    </div>
   </div>
+  
+  <div class="subsection">
+    <h4>Emails Sent</h4>
+    {% for email in loan.emails.all %}
+      <div class="email">
+        <span style="color:#999;">{{ email.date }}</span> &middot; {{ email.description }}
+      </div>
+    {% endfor %}
+</div>
 {% endblock %}

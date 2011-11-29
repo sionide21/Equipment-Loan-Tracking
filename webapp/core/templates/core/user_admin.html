@@ -1,0 +1,36 @@
+{% extends "secure_base.html" %}
+
+{% block title %}User Admin{% endblock %}
+
+{% block sidebar_links %}
+  <li><a class="large" href="{% url current_loans %}">Current Loans</a></li>
+  <li><a class="large" href="{% url past_loans %}">Past Loans</a></li>
+  <li><a class="large current-page" href="{% url user_admin %}">User Admin</a></li>
+{% endblock %}
+
+{% block subcontent %}
+<div class="top-space append-1 last">
+  {% if usernames|length < 1 %}
+    <tr class="empty-row"><td colspan="100">Only Superusers Are Currently Permitted</td></tr>
+  {% else %}
+    <h2>Current Valid Users</h2 >
+    <ul>
+    {% for user in usernames %}
+      <li>
+        {{user.username}}
+        <form action="{% url remove_user user.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="delete" />
+        </form>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <h2>Grant Access to a User</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Grant" />
+  </form>
+</div>
+{% endblock %}

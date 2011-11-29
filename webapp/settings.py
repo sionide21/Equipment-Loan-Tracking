@@ -20,6 +20,19 @@ DATABASES = {
     }
 }
 
+
+# For every number in this list, an email
+# will be sent that many days before an item is due.
+#
+# For example, if the list is [7, 2] two emails will be sent for every loan. One will be 
+# sent one week out and the other will be sent 2 days out.
+DUE_REMINDER_DAYS = [7, 2]
+
+# TODO, you will need to add information about your mailserver before you can send.
+# Untill then, this will simply print out emails.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -80,7 +93,7 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'django_cas.backends.CASBackend',
+    'core.cas.WhitelistCASBackend',
 )
 
 ROOT_URLCONF = 'urls'
