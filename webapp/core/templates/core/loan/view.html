@@ -38,7 +38,7 @@
       <h4>Loaned To</h4>
       <div>
         <div class="label span-4">Name</div>
-        <div class="last"><a href="{% url view_loan loan.id %}">{{ loan.loaned_to.name }}</a></div>
+        <div class="last"><a href="{% url view_person loan.loaned_to.gtid %}">{{ loan.loaned_to.name }}</a></div>
       </div>
       <div>
         <div class="label span-4">GTID</div>

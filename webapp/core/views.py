@@ -184,8 +184,11 @@ def view_person(request, person_id):
         if person_form.is_valid():
             person = person_form.save()
             loans = Loan.objects.filter(date_returned__isnull=True)
-            return render_to_response(request, 'core/current.html', {'loans': loans})
-    return render_to_response(request, 'core/person/edit.html',
+            #loan = get_object_or_404(Loan, id=loan_id)
+            return render_to_response(request, 'core/current.html', {'loans': loans},
+                              context_instance=RequestContext(request))
+    else:
+        return render_to_response(request, 'core/person/edit.html',
                               {'person_form': person_form},
                               context_instance=RequestContext(request))
 
