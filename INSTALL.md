@@ -23,6 +23,8 @@ You will need to install the following python libraries. If you have `pip` you c
 * MySQL-python 1.2.3
 * django-cas 2.0.3
 
+If you are having trouble installing MySQL-python from pip, it is available through your package manager (such as yum).
+
 
 ## Installation
 
