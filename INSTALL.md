@@ -71,7 +71,7 @@ Once the webapp is running, you can add student assistants by logging in and cli
 
 Superuser management is not exposed in the webapp, you have to do it directly in the database. The easiest way to add a superuser is to add them as a regular user first (User Admin above).
 
-After they have logged in once, there will be a user record for them in the database table `auth_user`. To make a user a superuser, simply set the `superuser` column to 1.
+After they have logged in once, there will be a user record for them in the database table `auth_user`. To make a user a superuser, simply set the `is_superuser` column to 1.
 
 #### A note on superusers
 
