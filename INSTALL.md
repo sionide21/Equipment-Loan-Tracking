@@ -28,12 +28,12 @@ If you are having trouble installing MySQL-python from pip, it is available thro
 
 ## Installation
 
-We have included a file call `apache.wsgi` that will let apache know about this project. Add the following lines to your apache config to use it.
+We have included a file call `django.wsgi` that will let apache know about this project. Add the following lines to your apache config to use it.
 
 We will assume that the project is in `/var/www/elt/` please update the code below to match the actual location.
 
     Alias /static "/var/www/elt/webapp/core/static"
-    WSGIScriptAlias / /var/www/elt/webapp/apache.wsgi
+    WSGIScriptAlias / /var/www/elt/webapp/django.wsgi
 
 
 ## Configuration
