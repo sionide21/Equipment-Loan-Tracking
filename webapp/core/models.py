@@ -137,7 +137,7 @@ class DivFormMixin:
             error_row=u'<div class="error span-13 last">%s</div>',
             row_ender=u'</div>',
             help_text_html=u'<div class="quiet legend prepend-3 span-10 last">%s</div>',
-            errors_on_separate_row=False)
+            errors_on_separate_row=True)
 
 
 class LoanForm(ModelForm, DivFormMixin):

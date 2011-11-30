@@ -78,10 +78,10 @@ def add_person(request):
     person_form = PersonForm()
     if request.method == 'POST':
         person_form = PersonForm(request.POST)
-    if person_form.is_valid():
-        person = person_form.save()
-        return render_to_response(request, 'core/person/select.html',
-                                  {'person': person})
+        if person_form.is_valid():
+            person = person_form.save()
+            return render_to_response(request, 'core/person/select.html',
+                                      {'person': person})
 
     return render_to_response(request, 'core/person/add.html',
                             {'person_form': person_form})
