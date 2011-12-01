@@ -60,6 +60,8 @@ def past_loans(request):
 @login_required
 def find_person(request):
     qs = None
+    if request.method == 'GET' and 'id' in request.GET:
+        qs = Person.objects.filter(id=request.GET['id'])
     if request.method == 'POST':
         terms = request.POST['q']
         query = Q(gtid=terms)
@@ -184,11 +186,8 @@ def view_person(request, person_id):
         if person_form.is_valid():
             person = person_form.save()
             loans = Loan.objects.filter(date_returned__isnull=True)
-            #loan = get_object_or_404(Loan, id=loan_id)
-            return render_to_response(request, 'core/current.html', {'loans': loans},
-                              context_instance=RequestContext(request))
-    else:
-        return render_to_response(request, 'core/person/edit.html',
+            return render_to_response(request, 'core/current.html', {'loans': loans})
+    return render_to_response(request, 'core/person/edit.html',
                               {'person_form': person_form},
                               context_instance=RequestContext(request))
 

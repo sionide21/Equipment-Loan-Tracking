@@ -106,7 +106,12 @@
       $("[name='serial_number']").blur(get_serial);
       
       $("#lookup_person").click(function() {
-        var child = window.open("{% url find_person %}");
+        var selected_person = $("[name='loaned_to']").val();
+        var url = "{% url find_person %}";
+        if (selected_person !== '') {
+          url += '?id=' + selected_person;
+        }
+        var child = window.open(url);
         if (window.focus) {
           child.focus();
         }
