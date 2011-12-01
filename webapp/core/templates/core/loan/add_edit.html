@@ -11,7 +11,7 @@
 {% block subcontent %}
   <form class="top-space bottom-space" method="post">
 
-  {% if item_form.errors|length > 0 or loan_form.errors|length > 0 or comment_form.errors|length > 0 %}
+  {% if item_form.errors|length > 0 or loan_form.errors|length > 0 or comment_form and comment_form.errors|length > 0 %}
     <div class="errorbox">
       One or more fields contain errors. Please see below.
     </div>
