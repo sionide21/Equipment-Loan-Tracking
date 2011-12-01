@@ -87,7 +87,7 @@ def add_person(request):
                             {'person_form': person_form})
 
 
-def handle_modify_loan(request, loan=None):
+def handle_modify_loan(request, loan=None, require_comment=False):
     '''Takes care of saving OR updating a loan'''
     if loan:
         loan_form = LoanForm(instance=loan)
@@ -98,27 +98,37 @@ def handle_modify_loan(request, loan=None):
         item_form = ItemForm()
         loaned_to = None
 
+    comment_form = require_comment and CommentForm()
+
     if request.method == 'POST':
         loan_form = LoanForm(request.POST, instance=loan)
         loaned_to = loan_form.fields['loaned_to'].to_python(request.POST['loaned_to'])
+        comment_form = require_comment and CommentForm(request.POST)
 
         try:
             item = Item.objects.get(serial_number__iexact=request.POST.get('serial_number'))
             item_form = ItemForm(request.POST, instance=item)
         except Item.DoesNotExist:
             item_form = ItemForm(request.POST)
-        if item_form.is_valid():
+        if item_form.is_valid() and (not require_comment or comment_form.is_valid()):
             item = item_form.save()
             if loan_form.is_valid():
                 loan = loan_form.save(commit=False)
                 loan.item = item
                 loan.loaned_by = request.user
                 loan.save()
+                if comment_form:
+                    comment = comment_form.save(commit=False)
+                    comment.user = request.user
+                    comment.loan = loan
+                    comment.is_edit = True
+                    comment.save()
                 return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
     ctx = {
         'loaned_to': loaned_to,
         'loan_form': loan_form,
         'item_form': item_form,
+        'comment_form': comment_form,
         'add': loan == None
     }
     return render_to_response(request, 'core/loan/add_edit.html', ctx)
@@ -130,7 +140,7 @@ def edit_loan(request, loan_id):
     if loan.date_returned:
         # Don't edit returned loans
         return HttpResponseRedirect(reverse('view_loan', args=(loan.id,)))
-    return handle_modify_loan(request, loan)
+    return handle_modify_loan(request, loan, require_comment=True)
 
 
 @login_required
@@ -156,6 +166,13 @@ def print_loan(request, loan_id):
     return render_to_response(request, 'core/loan/print.html',
                               {'loan': loan},
                               context_instance=RequestContext(request))
+
+
+@login_required
+def receipt(request, loan_id):
+    '''View the details of a loan in printable format'''
+    loan = get_object_or_404(Loan, id=loan_id)
+    return render_to_response(request, 'core/loan/receipt.html', {'loan': loan})
 
 
 @login_required

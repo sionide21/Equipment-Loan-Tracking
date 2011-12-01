@@ -4,8 +4,10 @@
 {% block title-options %}
   {% if not loan.returned_to %}
     <a href="{% url edit_loan loan %}">Edit</a> | 
+    <a href="{% url print_loan loan %}">Print</a>
+  {% else %}
+    <a href="{% url receipt loan %}">Receipt</a>
   {% endif %}
-  <a href="{% url print_loan loan %}">Receipt</a>
 {% endblock %}
 
 {% block subcontent %}
@@ -88,7 +90,11 @@
       <h4>Comments</h4>
       {% for comment in comments %}
         <div class="comment">
-          <b>{{ comment.user }}</b> &middot; <span style="color:#999;">{{ comment.date }}</span>
+          <b>{{ comment.user }}</b>
+          {% if comment.is_edit %}
+          &middot; <i><span style="color:red;">Edited Loan</span></i>
+          {% endif %}
+          &middot; <span style="color:#999;">{{ comment.date }}</span>
           <div class="comment-text">
             {{ comment.comment }}
           </div>
