@@ -31,6 +31,7 @@ def user_admin(request):
         form = WhitelistUserForm(request.POST)
         if form.is_valid():
             form.save()
+            form = WhitelistUserForm()
     usernames = Whitelist.objects.all()
     return render_to_response(request, 'core/user_admin.html', {'usernames': usernames, 'form': form})
 

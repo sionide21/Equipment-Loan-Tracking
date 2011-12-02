@@ -31,7 +31,7 @@ class Whitelist(models.Model):
     '''
     class Meta:
         ordering = ['username']
-    username = models.CharField(max_length=255, blank=False, unique=True, error_messages={'unique': 'This user already has access.'})
+    username = models.CharField(max_length=255, blank=False, unique=True, verbose_name="GT Username", error_messages={'unique': 'This user already has access.'})
 
 
 class Item(models.Model):

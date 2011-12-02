@@ -10,27 +10,44 @@
 
 {% block subcontent %}
 <div class="top-space append-1 last">
+  <p class="info">Enter the GT user names of the people who should access to this system. They will log in via CAS with their GT credentials.<br/> Superusers are always able to access the system and do not need to be in this list.</p>
+  <div class="align-left span-9">
+    <span class="table-title">Grant Access to a new User</span>
+    <div style="margin-top:15px;">
+    <form method="post">
+      {% csrf_token %}
+      <div style="color:red;">
+        {% for error in form.username.errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+      <div class="label span-3" style="margin:0.5em 0;"><span style="color:red;">*</span>GT Username:</div>
+      <div class="span-4"> {{ form.username }}</div>
+      <div class="span-2 last" style="margin-top: 2px;">
+        <input type="submit" value="Grant" />
+      </div>
+    </form>
+    </div>
+  </div>
+  <table class="span-9 last align-right customtable">
+    <tr class="table-header">
+      <th>Current Valid Users</th>
+    </tr>
   {% if usernames|length < 1 %}
     <tr class="empty-row"><td colspan="100">Only Superusers Are Currently Permitted</td></tr>
   {% else %}
-    <h2>Current Valid Users</h2 >
-    <ul>
     {% for user in usernames %}
-      <li>
-        {{user.username}}
+      <tr class="user-row">
+        <td>{{user.username}}</td>
+        <td>
         <form action="{% url remove_user user.id %}" method="post">
           {% csrf_token %}
-          <input type="submit" value="delete" />
+          <input type="submit" value="Remove" />
         </form>
-      </li>
+        </td>
+      </tr>
     {% endfor %}
-    </ul>
   {% endif %}
-  <h2>Grant Access to a User</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Grant" />
-  </form>
+  </table>
 </div>
 {% endblock %}
