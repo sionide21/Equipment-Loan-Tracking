@@ -86,6 +86,8 @@
 
   <script type="text/javascript">
     $(function() {
+      jQuery("#id_date_due").datepicker();
+
       var get_serial = function() {
         serial = $('[name=serial_number]').val()
         $.get('{% url item_description %}', {serial: serial}, function(data) {

@@ -144,6 +144,9 @@ class LoanForm(ModelForm, DivFormMixin):
     class Meta:
         model = Loan
         exclude = ('item', 'date_returned', 'returned_to', 'loaned_by',)
+        widgets = {
+          'date_due': forms.DateInput(format='%m/%d/%Y')
+        }
     loaned_to = ModelChoiceField(queryset=Person.objects, widget=HiddenInput)
 
 
