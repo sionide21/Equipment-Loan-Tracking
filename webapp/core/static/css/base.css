@@ -179,3 +179,12 @@ table.customtable tr:hover td {
   width: 350px;
   padding: 0 25px 25px 25px;
 }
+
+.user-row td {
+  padding: 5px;
+}
+
+.table-title {
+  font-size:14px;
+  font-weight:bold;
+}
