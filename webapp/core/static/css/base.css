@@ -29,6 +29,15 @@
   background: whitesmoke;
 }
 
+.errorbox {
+  border: 1px solid red;
+  background: #FAF0E6;
+  color: red;
+  font-size: 14px;
+  padding: 15px 15px;
+  margin-bottom: 10px;
+}
+
 #sidebar-container {
   height: 100%;
   margin-bottom: -2056px !important;
@@ -133,18 +142,18 @@ th {
   font-size: 14px;
 }
 
-td {
+.customtable td {
   padding: 0;
 }
 
-td a, td a:hover {
+.customtable td a, .customtable td a:hover {
   text-decoration: none;
   color: #000;
   display: block;
   padding: 4px 10px 4px 5px;
 }
 
-table tr:hover td {
+table.customtable tr:hover td {
   background-color: #BCD4EC;
 }
 
