@@ -9,7 +9,14 @@
 {% endblock %}
 
 {% block subcontent %}
-  <form class="top-space" method="post">
+  <form class="top-space bottom-space" method="post">
+
+  {% if item_form.errors|length > 0 or loan_form.errors|length > 0 or comment_form and comment_form.errors|length > 0 %}
+    <div class="errorbox">
+      One or more fields contain errors. Please see below.
+    </div>
+  {% endif %}
+
   {% csrf_token %}
     <div class="subsection">
       <h4>Equipment</h4>
@@ -68,16 +75,18 @@
     {% if comment_form %}
     <div class="subsection">
       <h4>Comment</h4>
-      <p>Please leave a comment explaining your change.</p>
+      <p class="label"><span style="color:red;">*</span>Please leave a comment explaining your change.</p>
       <div>
-          {{ comment_form.non_field_errors }}
-          {{ comment_form.comment.errors }}
-          <div>
-          {{ comment_form.comment }}
-          </div>
-          <div class="clear"></div>
+        <div style="color:red;">
+          {% for error in comment_form.comment.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+        {{ comment_form.comment }}
       </div>
-      {% endif %}
+      <div class="clear"></div>
+    </div>
+    {% endif %}
 
     <div class="prepend-17 last">  <input type="submit" value="Submit" /></div>
   </form>
