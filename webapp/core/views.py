@@ -60,6 +60,8 @@ def past_loans(request):
 @login_required
 def find_person(request):
     qs = None
+    if request.method == 'GET' and 'id' in request.GET:
+        qs = Person.objects.filter(id=request.GET['id'])
     if request.method == 'POST':
         terms = request.POST['q']
         query = Q(gtid=terms)

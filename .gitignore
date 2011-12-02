@@ -1,3 +1,4 @@
 *.pyc
 ve
+.DS_Store
 development.sqlite
