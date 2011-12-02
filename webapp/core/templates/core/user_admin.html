@@ -10,7 +10,8 @@
 
 {% block subcontent %}
 <div class="top-space append-1 last">
-  <div class="align-left span-8">
+  <p class="info">Enter the GT user names of the people who should access to this system. They will log in via CAS with their GT credentials.<br/> Superusers are always able to access the system and do not need to be in this list.</p>
+  <div class="align-left span-9">
     <span class="table-title">Grant Access to a new User</span>
     <div style="margin-top:15px;">
     <form method="post">
@@ -20,7 +21,7 @@
           {{ error }}
         {% endfor %}
       </div>
-      <div class="label span-2" style="margin:0.5em 0;"><span style="color:red;">*</span>Username:</div>
+      <div class="label span-3" style="margin:0.5em 0;"><span style="color:red;">*</span>GT Username:</div>
       <div class="span-4"> {{ form.username }}</div>
       <div class="span-2 last" style="margin-top: 2px;">
         <input type="submit" value="Grant" />
@@ -28,7 +29,7 @@
     </form>
     </div>
   </div>
-  <table class="span-10 last align-right customtable">
+  <table class="span-9 last align-right customtable">
     <tr class="table-header">
       <th>Current Valid Users</th>
     </tr>
