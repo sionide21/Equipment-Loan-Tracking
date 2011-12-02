@@ -163,3 +163,10 @@ table tr:hover td {
 .title-options a {
   text-decoration: none;
 }
+
+.receipt-container {
+  margin: 40px auto;
+  border: 1px dashed black;
+  width: 350px;
+  padding: 0 25px 25px 25px;
+}

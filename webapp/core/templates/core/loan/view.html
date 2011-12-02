@@ -4,7 +4,7 @@
 {% block title-options %}
   {% if not loan.returned_to %}
     <a href="{% url edit_loan loan %}">Edit</a> | 
-    <a href="{% url print_loan loan %}">Print</a>
+    <a href="{% url print_loan loan %}" target="_blank">Print</a>
   {% else %}
     <a href="{% url receipt loan %}">Receipt</a>
   {% endif %}
