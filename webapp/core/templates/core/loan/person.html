@@ -17,6 +17,7 @@
       <th>GT ID</th>
       <th>Name</th>
       <th>Email</th>
+      <th>&nbsp;</th>
     </tr>
     {% if results|length < 1 %}
       <tr class="empty-row"><td colspan="100">No results</td></tr>
@@ -30,6 +31,7 @@
         <td><a href="javascript:select({{person.id}}, '{{person.name}}');">{{ person.gtid }}</a></td>
         <td><a href="javascript:select({{person.id}}, '{{person.name}}');">{{ person.name }}</a></td>
         <td><a href="javascript:select({{person.id}}, '{{person.name}}');">{{ person.email }}</a></td>
+        <td><a class="keep_default" href="{% url view_person person.id %}">edit</a></td>
       </tr>
     {% endfor %}
   </table>
