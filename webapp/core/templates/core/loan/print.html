@@ -1,10 +1,9 @@
 <html>
   <head>
     <!-- Framework CSS -->
-    <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection">
-    <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection, print">
     <!--[if lt IE 8]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-    <link rel="stylesheet" href="/static/css/base.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css" media="screen, projection, print">
     <script type="text/javascript" src="/static/js/jquery-1.6.4.min.js"></script>
     <title>{%block title %}TSO{% endblock %} - Loan Tracker</title>
   </head>
@@ -12,6 +11,12 @@
   <body>
 
     {% block subcontent %}
+    <div class="receipt-container">
+      {% if loan.date_returned %}
+      <h2 style="text-align:center;">Returned Item Confirmation</h2>
+      {% else %}
+      <h2 style="text-align:center;">New Loan Receipt</h2>
+      {% endif %}
       <div class="loan">
         <div class="subsection">
           <h4>Dates</h4>
@@ -72,17 +77,22 @@
           {% else %}
             <div>
               <div class="label span-4">Status</div>
-              <div class="span-2" style="color:red;">Not returned</div>
+              <div class="last" style="color:red;">Not returned</div>
             </div>
           {% endif %}
         </div>
         <div class="signature">
           <h4>Signature</h4>
-          Print Name___________
-          Signature____________
-          Date________________
+          <div class="span-6">
+          Print Name &nbsp;______________________
+          </div>
+          <div class="last" style="margin-bottom:10px;">
+          Date ___________
+          </div>
+          Signature &nbsp;&nbsp;&nbsp;______________________
         </div>
       </div>
+    </div>
     {% endblock %}
   </body>
 </html>
