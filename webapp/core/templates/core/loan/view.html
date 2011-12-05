@@ -123,5 +123,8 @@
         <span style="color:#999;">{{ email.date }}</span> &middot; {{ email.description }}
       </div>
     {% endfor %}
+    {% if not loan.emails.all %}
+      <span style="color:#999;"><i>No emails have been sent about this loan.</i></span>
+    {% endif %}
 </div>
 {% endblock %}
