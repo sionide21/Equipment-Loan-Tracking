@@ -194,3 +194,7 @@ table.customtable tr:hover td {
   font-size:14px;
   font-weight:bold;
 }
+
+.fixed-input-size input {
+  width: 150px;
+}
