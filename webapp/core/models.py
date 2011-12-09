@@ -9,6 +9,9 @@ from datetime import date, datetime, time, timedelta
 
 
 def validate_past(value):
+    '''
+    Ensure that a given date is in the future.
+    '''
     from django.core.exceptions import ValidationError
     from datetime import datetime
     #Dont allow due dates to be in the past
@@ -69,7 +72,7 @@ class Loan(models.Model):
 
 class Comment(models.Model):
     '''
-    A comment on a loan
+    A comment on a loan.
     '''
     user = models.ForeignKey(User)
     loan = models.ForeignKey(Loan)
@@ -141,6 +144,9 @@ class DivFormMixin:
 
 
 class LoanForm(ModelForm, DivFormMixin):
+    '''
+    The form for adding or editing a loan.
+    '''
     class Meta:
         model = Loan
         exclude = ('item', 'date_returned', 'returned_to', 'loaned_by',)
@@ -151,21 +157,33 @@ class LoanForm(ModelForm, DivFormMixin):
 
 
 class ItemForm(ModelForm, DivFormMixin):
+    '''
+    The form for adding an item.
+    '''
     class Meta:
         model = Item
 
 
 class PersonForm(ModelForm, DivFormMixin):
+    '''
+    The form for adding/editing a person.
+    '''
     class Meta:
         model = Person
 
 
 class WhitelistUserForm(ModelForm, DivFormMixin):
+    '''
+    The form to add a username to the user whitelist.
+    '''
     class Meta:
         model = Whitelist
 
 
 class CommentForm(ModelForm, DivFormMixin):
+    '''
+    The form for creating comments on a loan.
+    '''
     class Meta:
         model = Comment
         widgets = {

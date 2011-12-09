@@ -24,6 +24,9 @@ def index(request):
 
 @login_required
 def user_admin(request):
+    '''
+    Allows superusers to maintain a list of gt usernames permitted to login.
+    '''
     if not request.user.is_superuser:
         raise PermissionDenied
     form = WhitelistUserForm()
@@ -38,6 +41,9 @@ def user_admin(request):
 
 @login_required
 def remove_user(request, username_id):
+    '''
+    Allows admins to delete a gt username from the whitelist.
+    '''
     if not request.user.is_superuser:
         raise PermissionDenied
     if request.method != 'POST':
@@ -48,18 +54,27 @@ def remove_user(request, username_id):
 
 @login_required
 def current_loans(request):
+    '''
+    A list of the currently oustanding loans in the system.
+    '''
     loans = Loan.objects.filter(date_returned__isnull=True)
     return render_to_response(request, 'core/current.html', {'loans': loans})
 
 
 @login_required
 def past_loans(request):
+    '''
+    A list of the loans marked returned in the system.
+    '''
     loans = Loan.objects.filter(date_returned__isnull=False)
     return render_to_response(request, 'core/past.html', {'loans': loans})
 
 
 @login_required
 def find_person(request):
+    '''
+    A lookup page for finding people to loan to.
+    '''
     qs = None
     if request.method == 'GET' and 'id' in request.GET:
         qs = Person.objects.filter(id=request.GET['id'])
@@ -78,6 +93,9 @@ def find_person(request):
 
 @login_required
 def add_person(request):
+    '''
+    Allow users to add a loanee to the system.
+    '''
     person_form = PersonForm()
     if request.method == 'POST':
         person_form = PersonForm(request.POST)
@@ -139,6 +157,9 @@ def handle_modify_loan(request, loan=None, require_comment=False):
 
 @login_required
 def edit_loan(request, loan_id):
+    '''
+    Show the edit screen for an existing loan.
+    '''
     loan = get_object_or_404(Loan, id=loan_id)
     if loan.date_returned:
         # Don't edit returned loans
@@ -148,6 +169,9 @@ def edit_loan(request, loan_id):
 
 @login_required
 def add_loan(request):
+    '''
+    Show the screen to add a new loan.
+    '''
     return handle_modify_loan(request)
 
 
@@ -180,6 +204,9 @@ def receipt(request, loan_id):
 
 @login_required
 def view_person(request, person_id):
+    '''
+    Allows viewing or editing of a specific person.
+    '''
     person = get_object_or_404(Person, id=person_id)
     person_form = PersonForm(instance=person)
     if request.method == 'POST':
@@ -193,6 +220,10 @@ def view_person(request, person_id):
 
 @login_required
 def item_description(request):
+    '''
+    An AJAX hook to return the description of an item based on it's serial number.
+    Will return 404 if the serial number is not in the system.
+    '''
     if 'serial' not in request.REQUEST:
         raise Http404
     serial = request.REQUEST['serial']
